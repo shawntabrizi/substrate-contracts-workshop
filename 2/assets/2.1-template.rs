@@ -55,7 +55,7 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn deployment_works() {
+    fn transfer_works() {
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         env::test::set_caller(alice);
 

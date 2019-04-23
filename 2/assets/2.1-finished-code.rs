@@ -11,7 +11,6 @@ use ink_core::{
 use ink_lang::contract;
 
 contract! {
-    /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
