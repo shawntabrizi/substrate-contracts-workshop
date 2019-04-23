@@ -9,7 +9,7 @@ If you take a look back at our contract's `deploy()` function, we set the initia
 
 In the **Call** section, set the _message to send_ to `get(): bool`. Send a _value_ of `1` with the _maximum gas allowed_ set to `100,000`.
 
-TODO: You should not need to send any _value_ when making a contract call, but there is a temporary bug in the UI requiring it, so we just put `1`.
+> **NOTE:** You should not need to send any _value_ when making a contract call, but there is a temporary bug in the UI requiring it, so we just put `1`.
 
 ![An image of the Contracts call page](./assets/flipper-call-page.png)
 
