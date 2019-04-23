@@ -19,6 +19,7 @@
     - [Create an Incrementer]()
     - [Storage Mapping]()
     - [Update our Incrementer]()
+    - [Safe Math]()
 
 - [**#2 ERC20**](2/introduction.md)
 
