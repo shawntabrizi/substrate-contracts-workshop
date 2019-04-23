@@ -6,15 +6,13 @@ We are going to use the ink! CLI to generate the files we need for a Substrate s
 Make sure you are in your working directory, and then run:
 
 ```bash
-cargo contract new <NAME>
+cargo contract new flipper
 ```
 
-We will choose `erc20` as the name for this tutorial, but you can pick whatever you want.
-
-This command will create a new project folder named `erc20` which we will explore:
+This command will create a new project folder named `flipper` which we will explore:
 
 ```
-erc20
+flipper
 |
 +-- .cargo
 |   |
@@ -39,7 +37,7 @@ The ink CLI automatically generates the source code for the "Flipper" contract, 
 
 [Flipper Example Source Code](https://github.com/paritytech/ink/blob/master/examples/lang/flipper/src/lib.rs)
 
-The Flipper contract is nothing more than a `bool` which gets flipped from true to false through the `flip()` function. We won't go so deep into the details of this source code because we will be walking you through the steps to build your own!
+The Flipper contract is nothing more than a `bool` which gets flipped from true to false through the `flip()` function. We won't go so deep into the details of this source code because we will be walking you through the steps to build a more advance contract!
 
 ## Testing Your Contract
 
@@ -54,9 +52,9 @@ cargo test --features test-env
 To which you should see a successful test completion:
 
 ```bash
-Shawns-MBP:erc20 shawntabrizi$ cargo test --features test-env
+Shawns-MBP:flipper shawntabrizi$ cargo test --features test-env
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
-     Running target/debug/deps/erc20-03a085eedcb655b9
+     Running target/debug/deps/flipper-03a085eedcb655b9
 
 running 1 test
 test tests::it_works ... ok

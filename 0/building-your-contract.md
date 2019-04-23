@@ -6,7 +6,7 @@ The ink! CLI also generates a build script called `build.sh`:
 ```bash
 #!/bin/bash
 
-PROJNAME=erc20
+PROJNAME=flipper
 
 CARGO_INCREMENTAL=0 &&
 cargo +nightly build --release --features generate-api-description --target=wasm32-unknown-unknown --verbose &&
@@ -29,28 +29,28 @@ chmod +x build.sh
 If all goes well, you should see a `target` folder being created with 5 relevant files corresponding to the steps in the script:
 
 ```
-erc20.wat
-erc20-fixed.wat
-erc20.wasm
-erc20-opt.wasm
-erc20-pruned.wasm
+flipper.wat
+flipper-fixed.wat
+flipper.wasm
+flipper-opt.wasm
+flipper-pruned.wasm
 ```
 
-The final, optimized `erc20-pruned.wasm` file is what we will actually deploy to our substrate chain.
+The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our substrate chain.
 
-### Contract ABI
+## Contract ABI
 
 You will also notice a JSON file which is generated during the build script:
 
 ```
-Erc20.json
+Flipper.json
 ```
 
 This is your contract's application binary interface (ABI). Let's take a look inside:
 
 ```json
 {
-    "name": "Erc20",
+    "name": "Flipper",
     "deploy": {
         "args": []
     },

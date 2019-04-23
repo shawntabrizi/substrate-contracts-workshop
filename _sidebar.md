@@ -7,9 +7,9 @@
     - [Creating an ink! Project](0/creating-an-ink-project.md)
     - [Building Your Contract](0/building-your-contract.md)
     - [Running a Substrate Node](0/running-a-substrate-node.md)
-    - [Deploying Your Contract]()
-    - [Calling Your Contract]()
-    - [Rust 101 for ink!]()
+    - [Deploying Your Contract](0/deploying-your-contract.md)
+    - [Calling Your Contract](0/calling-your-contract.md)
+    - [Rust Primer](0/rust-primer.md)
 
 - [**#1 Basics**](1/introduction.md)
 
