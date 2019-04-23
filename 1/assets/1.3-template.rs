@@ -18,8 +18,8 @@ contract! {
 
     impl Incrementer {
         pub(external) fn get(&self) -> u64 {
-            println(&format!("Incrementer::get = {:?}", *self.value));
-            *self.value
+            // ACTION: Use `println` to print the value of `self.value`
+            // ACTION: Return `self.value`
         }
     }
 }
@@ -29,7 +29,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         let mut contract = Incrementer::deploy_mock(5);
         assert_eq!(contract.get(), 5);
     }

@@ -23,7 +23,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         // Test Your Contract
     }
 }

@@ -24,26 +24,24 @@ contract! {
         }
 
         pub(external) fn inc(&mut self, by: u64) {
-            println(&format!("Incrementer::inc by = {:?}", by));
-            let my_value = self.value_of_or_default(&env.caller());
-            let new_value = my_value + by;
-            self.my_value.insert(env.caller(), new_value);
+            self.value += by;
         }
 
         pub(external) fn get_mine(&self) -> u64 {
-            let my_value = self.value_of_or_default(&env.caller());
+            let my_value = self.my_value_or_zero(&env.caller());
             println(&format!("Incrementer::get_mine = {:?}", my_value));
             my_value
+        }
+
+        pub(external) fn inc_mine(&mut self, by: u64) {
+            let my_value = self.my_value_or_zero(&env.caller());
+            self.my_value.insert(env.caller(), my_value + by);
         }
     }
 
     impl Incrementer {
-        fn value_of_or_default(&self, of: &AccountId) -> u64 {
-            let my_value = self.my_value.get(of).unwrap_or(&self.value);
-            println(&format!(
-                "Incrementer::value_of_or_default(of = {:?}) = {:?}",
-                of, my_value
-            ));
+        fn my_value_or_zero(&self, of: &AccountId) -> u64 {
+            let my_value = self.my_value.get(of).unwrap_or(&0);
             *my_value
         }
     }
@@ -55,20 +53,33 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
+        let mut contract = Incrementer::deploy_mock(5);
+        assert_eq!(contract.get(), 5);
+        contract.inc(42);
+        assert_eq!(contract.get(), 47);
+        contract.inc(0);
+        assert_eq!(contract.get(), 47);
+    }
+
+    #[test]
+    fn my_incrementer_works() {
         let mut contract = Incrementer::deploy_mock(5);
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         let bob = AccountId::try_from([0x1; 32]).unwrap();
 
         env::test::set_caller(alice);
-        assert_eq!(contract.get(), 5);
-        assert_eq!(contract.get_mine(), 5);
-        contract.inc(42);
-        assert_eq!(contract.get_mine(), 47);
-        contract.inc(0);
-        assert_eq!(contract.get_mine(), 47);
+        assert_eq!(contract.get_mine(), 0);
+        contract.inc_mine(42);
+        assert_eq!(contract.get_mine(), 42);
+        contract.inc_mine(0);
+        assert_eq!(contract.get_mine(), 42);
         
         env::test::set_caller(bob);
-        assert_eq!(contract.get_mine(), 5);
+        assert_eq!(contract.get_mine(), 0);
+        contract.inc_mine(42);
+        assert_eq!(contract.get_mine(), 42);
+        contract.inc_mine(0);
+        assert_eq!(contract.get_mine(), 42);
     }
 }

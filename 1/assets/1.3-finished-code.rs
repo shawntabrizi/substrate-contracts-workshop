@@ -29,7 +29,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         let mut contract = Incrementer::deploy_mock(5);
         assert_eq!(contract.get(), 5);
     }

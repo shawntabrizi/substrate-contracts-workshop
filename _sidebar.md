@@ -13,13 +13,13 @@
 
 - [**#1 Basics**](1/introduction.md)
 
-    - [Creating a Storage Value]()
-    - [Storing a Value]()
-    - [Printing a Value]()
-    - [Create an Incrementer]()
-    - [Storage Mapping]()
-    - [Updating our Incrementer]()
-    - [Safe Math]()
+    - [Contract Template](1/contract-template.md)
+    - [Storing a Value](1/storing-a-value.md)
+    - [Getting a Value](1/getting-a-value.md)
+    - [Incrementing the Value](1/incrementing-the-value.md)
+    - [Storing a Mapping](1/storing-a-mapping.md)
+    - [Incrementing My Value](1/incrementing-my-value.md)
+    - [Safe Math](1/safe-math.md)
 
 - [**#2 ERC20**](2/introduction.md)
 

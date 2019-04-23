@@ -25,24 +25,19 @@ contract! {
         }
 
         pub(external) fn inc(&mut self, by: u64) {
-            println(&format!("Incrementer::inc by = {:?}", by));
             self.value += by;
         }
 
         pub(external) fn get_mine(&self) -> u64 {
-            let my_value = self.value_of_or_default(&env.caller());
+            let my_value = self.my_value_or_zero(&env.caller());
             println(&format!("Incrementer::get_mine = {:?}", my_value));
             my_value
         }
     }
 
     impl Incrementer {
-        fn value_of_or_default(&self, of: &AccountId) -> u64 {
-            let my_value = self.my_value.get(of).unwrap_or(&self.value);
-            println(&format!(
-                "Incrementer::value_of_or_default(of = {:?}) = {:?}",
-                of, my_value
-            ));
+        fn my_value_or_zero(&self, of: &AccountId) -> u64 {
+            let my_value = self.my_value.get(of).unwrap_or(&0);
             *my_value
         }
     }
@@ -53,7 +48,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         let contract = Incrementer::deploy_mock(5);
         assert_eq!(contract.get(), 5);
         assert_eq!(contract.get_mine(), 5);

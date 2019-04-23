@@ -5,12 +5,12 @@ use ink_core::storage;
 
 contract! {
     struct Incrementer {
-        value: storage::Value<u64>,
+        // ACTION: Create a `storage::Value` called `value` which holds a `u64`
     }
 
     impl Deploy for Incrementer {
         fn deploy(&mut self, init_value: u64) {
-            self.value.set(init_value)
+            // ACTION: `set` the initial value of `value` with `init_value`
         }
     }
 
@@ -24,7 +24,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         let mut contract = Incrementer::deploy_mock(5);
     }
 }

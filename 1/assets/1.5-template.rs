@@ -9,7 +9,7 @@ use ink_core::env::AccountId;
 contract! {
     struct Incrementer {
         value: storage::Value<u64>,
-        my_value: storage::HashMap<AccountId, u64>,
+        // ACTION: Add a `HashMap` called `my_value` which maps `AccountId` to `u64`
     }
 
     impl Deploy for Incrementer {
@@ -25,25 +25,20 @@ contract! {
         }
 
         pub(external) fn inc(&mut self, by: u64) {
-            println(&format!("Incrementer::inc by = {:?}", by));
             self.value += by;
         }
 
         pub(external) fn get_mine(&self) -> u64 {
-            let my_value = self.value_of_or_default(&env.caller());
-            println(&format!("Incrementer::get_mine = {:?}", my_value));
-            my_value
+            // ACTION: Get `my_value` using `my_value_or_zero` on `env.caller()`
+            // ACTION: Print `my_value` to simplify on-chain testing
+            // ACTION: Return `my_value` at the end
         }
     }
 
     impl Incrementer {
-        fn value_of_or_default(&self, of: &AccountId) -> u64 {
-            let my_value = self.my_value.get(of).unwrap_or(&self.value);
-            println(&format!(
-                "Incrementer::value_of_or_default(of = {:?}) = {:?}",
-                of, my_value
-            ));
-            *my_value
+        fn my_value_or_zero(&self, of: &AccountId) -> u64 {
+            // ACTION: `get` the value of `of` and `unwrap_or` return 0
+            // ACTION: Return the value at the end
         }
     }
 }
@@ -53,7 +48,7 @@ mod tests {
     use super::Incrementer;
 
     #[test]
-    fn it_works() {
+    fn incrementer_works() {
         let contract = Incrementer::deploy_mock(5);
         assert_eq!(contract.get(), 5);
         assert_eq!(contract.get_mine(), 5);
