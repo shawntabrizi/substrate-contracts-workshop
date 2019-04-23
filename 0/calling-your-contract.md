@@ -37,8 +37,14 @@ Woohoo! You deployed your first smart contract!
 
 ## Moving Forward
 
-We will not go over these setup and deployment steps again, but we will use them throughout the tutorial.
+We will not go over these setup and deployment steps again, but we will use them throughout the tutorial. You can always come back to this chapter if you need to remember how to do a certain process.
 
-You will need to remember or come back to this chapter for things like building your Wasm with `build.sh`, or testing your contract with `cargo test --features test-env`.
+The rest of the tutorial will have **template code** which you will use to walk through the different steps of contract development. Each template comes with a fully designed suite of tests that should pass if you programmed your contract correctly. Before you move on from a section, make sure that you run:
 
-If we ask you to deploy your contract, you will need to follow the same steps you have done with the flipper contract. Everything should work the same. :)
+```bash
+cargo test --features test-env
+```
+
+and that the tests all execute successfully, without any warnings.
+
+You need not deploy your contract between each section, but if we ask you to deploy your contract, you will need to follow the same steps you have done with the Flipper contract.
