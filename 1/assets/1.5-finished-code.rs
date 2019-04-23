@@ -8,28 +8,28 @@ use ink_core::env::AccountId;
 
 contract! {
     struct Incrementer {
-        value: storage::Value<u32>,
-        my_value: storage::HashMap<AccountId, u32>,
+        value: storage::Value<u64>,
+        my_value: storage::HashMap<AccountId, u64>,
     }
 
     impl Deploy for Incrementer {
-        fn deploy(&mut self, init_value: u32) {
+        fn deploy(&mut self, init_value: u64) {
             self.value.set(init_value)
         }
     }
 
     impl Incrementer {
-        pub(external) fn get(&self) -> u32 {
+        pub(external) fn get(&self) -> u64 {
             println(&format!("Incrementer::get = {:?}", *self.value));
             *self.value
         }
 
-        pub(external) fn inc(&mut self, by: u32) {
+        pub(external) fn inc(&mut self, by: u64) {
             println(&format!("Incrementer::inc by = {:?}", by));
             self.value += by;
         }
 
-        pub(external) fn get_mine(&self) -> u32 {
+        pub(external) fn get_mine(&self) -> u64 {
             let my_value = self.value_of_or_default(&env.caller());
             println(&format!("Incrementer::get_mine = {:?}", my_value));
             my_value
@@ -37,7 +37,7 @@ contract! {
     }
 
     impl Incrementer {
-        fn value_of_or_default(&self, of: &AccountId) -> u32 {
+        fn value_of_or_default(&self, of: &AccountId) -> u64 {
             let my_value = self.my_value.get(of).unwrap_or(&self.value);
             println(&format!(
                 "Incrementer::value_of_or_default(of = {:?}) = {:?}",

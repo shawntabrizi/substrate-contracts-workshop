@@ -23,11 +23,10 @@ enum Event {
         to: Option<AccountId>,
         value: Balance,
     },
-    Approval {
-        owner: AccountId,
-        spender: AccountId,
-        value: Balance,
-    },
+    // ACTION: Create an `Approval` event with:
+    //         * owner: AccountId
+    //         * spender: AccountId
+    //         * value: Balance
 }
 
 /// Deposits an ERC20 token event.
@@ -43,7 +42,8 @@ contract! {
         /// The balance of each user.
         balances: storage::HashMap<AccountId, Balance>,
         /// Balances that are spendable by non-owners: (owner, spender) -> allowed
-        allowances: storage::HashMap<(AccountId, AccountId), Balance>,
+        // ACTION: Create a new `allowances` HashMap which maps
+        //         a tuple `(AccountId, AccountId)` to `Balance`
     }
 
     impl Deploy for Erc20 {
@@ -75,12 +75,9 @@ contract! {
 
         /// Returns the amount of tokens that an owner allowed to a spender.
         pub(external) fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance {
-            let allowance = self.allowance_or_zero(&owner, &spender);
-            env::println(&format!(
-                "Erc20::allowance(owner = {:?}, spender = {:?}) = {:?}",
-                owner, spender, allowance
-            ));
-            allowance
+            // ACTION: Create a getter for the `allowances` HashMap
+            //   HINT: Take a look at the getters above if you forget the details
+            // ACTION: Return the `allowance` at the end
         }
 
         /// Transfers token from the sender to the `to` address.
@@ -106,12 +103,10 @@ contract! {
 
         /// Transfer tokens from one address to another.
         pub(external) fn transfer_from(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
-            let allowance = self.allowance_or_zero(&from, &env.caller());
-            if allowance < value {
-                return false
-            }
-            self.allowances.insert((from, env.caller()), allowance - value);
-            self.transfer_impl(from, to, value)
+            // ACTION: Get the allowance for `(from, env.caller())` using `allowance_or_zero`
+            // ACTION: `if` the `allowance` is less than the `value`, exit early and return `false`
+            // ACTION: `insert` the new allowance into the map for `(from, env.caller())`
+            // ACTION: Finally, call the `transfer_impl` for `from` and `to`
         }
     }
 
@@ -124,8 +119,8 @@ contract! {
 
         /// Returns the allowance or 0 of there is no allowance.
         fn allowance_or_zero(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-            let allowance = self.allowances.get(&(*owner, *spender)).unwrap_or(&0);
-            *allowance
+            // ACTION: Get the allowance between `(owner, spender)` and `unwrap_or` return 0
+            // ACTION: Return the allowance
         }
 
         /// Transfers token from a specified address to another address.

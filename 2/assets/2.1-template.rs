@@ -11,7 +11,6 @@ use ink_core::{
 use ink_lang::contract;
 
 contract! {
-    /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
@@ -21,32 +20,31 @@ contract! {
 
     impl Deploy for Erc20 {
         fn deploy(&mut self, init_value: Balance) {
-            self.total_supply.set(init_value);
-            self.balances.insert(env.caller(), init_value);
+            // ACTION: `set` the total supply to `init_value`
+            // ACTION: `insert` the `init_value` as the `env.caller()` balance
         }
     }
 
     impl Erc20 {
         /// Returns the total number of tokens in existence.
         pub(external) fn total_supply(&self) -> Balance {
-            let total_supply = *self.total_supply;
-            env.println(&format!("Erc20::total_supply = {:?}", total_supply));
-            total_supply
+            // ACTION: Print the total supply to the node's output
+            // ACTION: Return the total supply
         }
 
         /// Returns the balance of the given address.
         pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
-            let balance = self.balance_of_or_zero(&owner);
-            env.println(&format!("Erc20::balance_of(owner = {:?}) = {:?}", owner, balance));
-            balance
+            // ACTION: Print the balance of `owner`
+            // ACTION: Return the balance of `owner`
+            //   HINT: Use `balance_of_or_zero` to get the `owner` balance
         }
     }
 
     impl Erc20 {
         /// Returns the balance of the address or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            let balance = self.balances.get(of).unwrap_or(&0);
-            *balance
+            // ACTION: `get` the balance of `of`, then `unwrap_or` fallback to 0
+            // ACTION: Return the balance
         }
     }
 }
@@ -57,7 +55,7 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn transfer_works() {
+    fn deployment_works() {
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         env::test::set_caller(alice);
 

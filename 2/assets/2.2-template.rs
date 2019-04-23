@@ -43,7 +43,7 @@ contract! {
 
         /// Transfers token from the sender to the `to` address.
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
-            self.transfer_impl(env.caller(), to, value)
+            // ACTION: Call the `transfer_impl` with `from` as `env.caller()`
         }
     }
 
@@ -56,13 +56,12 @@ contract! {
 
         /// Transfers token from a specified address to another address.
         fn transfer_impl(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
-            let balance_from = self.balance_of_or_zero(&from);
-            let balance_to = self.balance_of_or_zero(&to);
-            if balance_from < value {
-                return false
-            }
-            self.balances.insert(from, balance_from - value);
-            self.balances.insert(to, balance_to + value);
+            // ACTION: Get the balance for `from` and `to`
+            //   HINT: Use the `balance_of_or_zero` function to do this
+            // ACTION: If `balance` from is less than `value`, return `false`
+            // ACTION: Insert new values for `from` and `to`
+            //         * balance_from - value
+            //         * balance_to + value
             true
         }
     }

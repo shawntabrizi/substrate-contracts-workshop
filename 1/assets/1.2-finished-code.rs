@@ -5,11 +5,11 @@ use ink_core::storage;
 
 contract! {
     struct Incrementer {
-        value: storage::Value<u32>,
+        value: storage::Value<u64>,
     }
 
     impl Deploy for Incrementer {
-        fn deploy(&mut self, init_value: u32) {
+        fn deploy(&mut self, init_value: u64) {
             self.value.set(init_value)
         }
     }

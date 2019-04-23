@@ -7,17 +7,17 @@ use ink_core::memory::format;
 
 contract! {
     struct Incrementer {
-        value: storage::Value<u32>,
+        value: storage::Value<u64>,
     }
 
     impl Deploy for Incrementer {
-        fn deploy(&mut self, init_value: u32) {
+        fn deploy(&mut self, init_value: u64) {
             self.value.set(init_value)
         }
     }
 
     impl Incrementer {
-        pub(external) fn get(&self) -> u32 {
+        pub(external) fn get(&self) -> u64 {
             println(&format!("Incrementer::get = {:?}", *self.value));
             *self.value
         }

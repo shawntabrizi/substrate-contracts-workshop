@@ -1,7 +1,12 @@
 #![cfg_attr(not(any(test, feature = "test-env")), no_std)]
 
+use parity_codec::{
+    Decode,
+    Encode,
+};
 use ink_core::{
     env::{
+        self,
         AccountId,
         Balance,
     },
@@ -10,8 +15,21 @@ use ink_core::{
 };
 use ink_lang::contract;
 
+/// Events deposited by the ERC20 token contract.
+#[derive(Encode, Decode)]
+enum Event {
+    // ACTION: Create a `Transfer` event with:
+    //         * from: Option<AccountId>
+    //         * to: Option<AccountId>
+    //         * value: Balance
+}
+
+/// Deposits an ERC20 token event.
+fn deposit_event(event: Event) {
+    env::deposit_raw_event(&event.encode()[..])
+}
+
 contract! {
-    /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
@@ -23,6 +41,9 @@ contract! {
         fn deploy(&mut self, init_value: Balance) {
             self.total_supply.set(init_value);
             self.balances.insert(env.caller(), init_value);
+            // ACTION: Call `deposit_event` with `Transfer` from the `Event` enum
+            //   HINT: According to the ERC20 specification, we should set from to `None`
+            //   HINT: Since we use `Option<AccountId>`, you need to wrap accounts in `Some()`
         }
     }
 
@@ -63,6 +84,8 @@ contract! {
             }
             self.balances.insert(from, balance_from - value);
             self.balances.insert(to, balance_to + value);
+            // ACTION: Call `deposit_event` with `Transfer` from the `Event` enum
+            //   HINT: Since we use `Option<AccountId>`, you need to wrap accounts in `Some()`
             true
         }
     }

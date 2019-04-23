@@ -18,7 +18,6 @@ use ink_lang::contract;
 /// Events deposited by the ERC20 token contract.
 #[derive(Encode, Decode)]
 enum Event {
-    /// A transfer has been done.
     Transfer {
         from: Option<AccountId>,
         to: Option<AccountId>,
@@ -32,21 +31,22 @@ fn deposit_event(event: Event) {
 }
 
 contract! {
-    /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
-        /// All peeps done by all users.
+        /// The balance of each user.
         balances: storage::HashMap<AccountId, Balance>,
     }
 
     impl Deploy for Erc20 {
         fn deploy(&mut self, init_value: Balance) {
-            // We have to set total supply to `0` in order to initialize it.
-            // Otherwise accesses to total supply will panic.
-            env.println(&format!("Erc20::deploy(caller = {:?}, init_value = {:?})", env.caller(), init_value));
             self.total_supply.set(init_value);
             self.balances.insert(env.caller(), init_value);
+            deposit_event(Event::Transfer { 
+                from: None,
+                to: Some(env.caller()),
+                value: init_value
+            });
         }
     }
 
@@ -67,10 +67,6 @@ contract! {
 
         /// Transfers token from the sender to the `to` address.
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
-            env.println(&format!(
-                "Erc20::transfer(to = {:?}, value = {:?})",
-                to, value
-            ));
             self.transfer_impl(env.caller(), to, value)
         }
     }
@@ -79,19 +75,11 @@ contract! {
         /// Returns the balance of the address or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
             let balance = self.balances.get(of).unwrap_or(&0);
-            env::println(&format!(
-                "Erc20::balance_of_or_zero(of = {:?}) = {:?}",
-                of, balance
-            ));
             *balance
         }
 
         /// Transfers token from a specified address to another address.
         fn transfer_impl(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
-            env::println(&format!(
-                "Erc20::transfer_impl(from = {:?}, to = {:?}, value = {:?})",
-                from, to, value
-            ));
             let balance_from = self.balance_of_or_zero(&from);
             let balance_to = self.balance_of_or_zero(&to);
             if balance_from < value {
@@ -99,27 +87,12 @@ contract! {
             }
             self.balances.insert(from, balance_from - value);
             self.balances.insert(to, balance_to + value);
-            Self::emit_transfer(from, to, value);
+            deposit_event(Event::Transfer { 
+                from: Some(from),
+                to: Some(to),
+                value: value
+            });
             true
-        }
-    }
-
-    impl Erc20 {
-        /// Emits a transfer event.
-        fn emit_transfer<F, T>(
-            from: F,
-            to: T,
-            value: Balance,
-        )
-        where
-            F: Into<Option<AccountId>>,
-            T: Into<Option<AccountId>>,
-        {
-            let (from, to) = (from.into(), to.into());
-            assert!(from.is_some() || to.is_some());
-            assert_ne!(from, to);
-            assert!(value > 0);
-            deposit_event(Event::Transfer { from, to, value });
         }
     }
 }
@@ -130,18 +103,31 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
+    fn deployment_works() {
+        let alice = AccountId::try_from([0x0; 32]).unwrap();
+        env::test::set_caller(alice);
+
+        // Deploy the contract with some `init_value`
+        let erc20 = Erc20::deploy_mock(1234);
+        // Check that the `total_supply` is `init_value`
+        assert_eq!(erc20.total_supply(), 1234);
+        // Check that `balance_of` Alice is `init_value`
+        assert_eq!(erc20.balance_of(alice), 1234);
+    }
+
+    #[test]
     fn transfer_works() {
-        let mut erc20 = Erc20::deploy_mock(1234);
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         let bob = AccountId::try_from([0x1; 32]).unwrap();
 
         env::test::set_caller(alice);
-        assert_eq!(erc20.total_supply(), 1234);
-        assert_eq!(erc20.balance_of(alice), 1234);
+        // Deploy the contract with some `init_value`
+        let mut erc20 = Erc20::deploy_mock(1234);
         // Alice does not have enough funds for this
         assert_eq!(erc20.transfer(bob, 4321), false);
         // Alice can do this though
         assert_eq!(erc20.transfer(bob, 234), true);
+        // Check Alice and Bob have the expected balance
         assert_eq!(erc20.balance_of(alice), 1000);
         assert_eq!(erc20.balance_of(bob), 234);
     }
