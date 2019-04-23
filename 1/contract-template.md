@@ -1,9 +1,23 @@
 Contract Template
 ===
 
-We are going to start a new project for the Incrementer contract we will build in this chapter.
+Let's take a look at a high level what is available to you when developing a smart contract using the ink!.
+
+## ink!
+
+ink! is an [eDSL](https://wiki.haskell.org/Embedded_domain_specific_language) to write WebAssembly based smart contracts in the Rust programming language.
+
+ink! exists at 3 different layers:
+
+* Core: The core utilities used to write smart contracts.
+* Model: Medium-level abstractions to write smart contracts heavily inspired by [Fleetwood](https://github.com/paritytech/fleetwood).
+* Language (Lang): The actual eDSL based on ink! Core and ink! Model to provide a user friendly interface to writing smart contract code.
+
+The Language layer of ink! relies on a single, heavy macro called `contract!`. At compile time, this macro expands to generate code at the Model and Core level. For the purposes of this guide, we will be focusing on the Language layer of ink! where we expect most contract development to take place. Take a quick look over the ink! contract template provided here.
 
 ## Your Turn!
+
+We are going to start a new project for the Incrementer contract we will build in this chapter.
 
 So go into your working directory and run:
 

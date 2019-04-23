@@ -1,5 +1,6 @@
 #![cfg_attr(not(any(test, feature = "std")), no_std)]
 
+// Import the `contract!` macro
 use ink_lang::contract;
 
 contract! {
@@ -20,7 +21,7 @@ contract! {
 
 #[cfg(all(test, feature = "test-env"))]
 mod tests {
-    use super::Incrementer;
+    use super::*;
 
     #[test]
     fn incrementer_works() {

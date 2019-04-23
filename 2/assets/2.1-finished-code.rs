@@ -33,7 +33,7 @@ contract! {
             total_supply
         }
 
-        /// Returns the balance of the given address.
+        /// Returns the balance of the given AccountId.
         pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
             let balance = self.balance_of_or_zero(&owner);
             env.println(&format!("Erc20::balance_of(owner = {:?}) = {:?}", owner, balance));
@@ -42,7 +42,7 @@ contract! {
     }
 
     impl Erc20 {
-        /// Returns the balance of the address or 0 if there is no balance.
+        /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
             let balance = self.balances.get(of).unwrap_or(&0);
             *balance

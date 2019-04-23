@@ -34,27 +34,27 @@ contract! {
             total_supply
         }
 
-        /// Returns the balance of the given address.
+        /// Returns the balance of the given AccountId.
         pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
             let balance = self.balance_of_or_zero(&owner);
             env.println(&format!("Erc20::balance_of(owner = {:?}) = {:?}", owner, balance));
             balance
         }
 
-        /// Transfers token from the sender to the `to` address.
+        /// Transfers token from the sender to the `to` AccountId.
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
             self.transfer_impl(env.caller(), to, value)
         }
     }
 
     impl Erc20 {
-        /// Returns the balance of the address or 0 if there is no balance.
+        /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
             let balance = self.balances.get(of).unwrap_or(&0);
             *balance
         }
 
-        /// Transfers token from a specified address to another address.
+        /// Transfers token from a specified AccountId to another AccountId.
         fn transfer_impl(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
             let balance_from = self.balance_of_or_zero(&from);
             let balance_to = self.balance_of_or_zero(&to);

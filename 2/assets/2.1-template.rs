@@ -32,7 +32,7 @@ contract! {
             // ACTION: Return the total supply
         }
 
-        /// Returns the balance of the given address.
+        /// Returns the balance of the given AccountId.
         pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
             // ACTION: Print the balance of `owner`
             // ACTION: Return the balance of `owner`
@@ -41,7 +41,7 @@ contract! {
     }
 
     impl Erc20 {
-        /// Returns the balance of the address or 0 if there is no balance.
+        /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
             // ACTION: `get` the balance of `of`, then `unwrap_or` fallback to 0
             // ACTION: Return the balance

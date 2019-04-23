@@ -31,7 +31,7 @@ contract! {
 
 #[cfg(all(test, feature = "test-env"))]
 mod tests {
-    use super::Incrementer;
+    use super::*;
 
     #[test]
     fn incrementer_works() {
