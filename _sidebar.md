@@ -4,9 +4,9 @@
 - [**#0 Getting Started**](0/introduction.md)
 
     - [Setup](0/setup.md)
-    - [Running a Substrate Node]()
-    - [Create a Contract Template]()
-    - [Building and Testing Your Contract]()
+    - [Creating an ink! Project](0/creating-an-ink-project.md)
+    - [Building Your Contract](0/building-your-contract.md)
+    - [Running a Substrate Node](0/running-a-substrate-node.md)
     - [Deploying Your Contract]()
     - [Calling Your Contract]()
     - [Rust 101 for ink!]()

@@ -1,0 +1,109 @@
+Building Your Contract
+===
+
+The ink! CLI also generates a build script called `build.sh`:
+
+```bash
+#!/bin/bash
+
+PROJNAME=erc20
+
+CARGO_INCREMENTAL=0 &&
+cargo +nightly build --release --features generate-api-description --target=wasm32-unknown-unknown --verbose &&
+wasm2wat -o target/$PROJNAME.wat target/wasm32-unknown-unknown/release/$PROJNAME.wasm &&
+cat target/$PROJNAME.wat | sed "s/(import \"env\" \"memory\" (memory (;0;) 2))/(import \"env\" \"memory\" (memory (;0;) 2 16))/" > target/$PROJNAME-fixed.wat &&
+wat2wasm -o target/$PROJNAME.wasm target/$PROJNAME-fixed.wat &&
+wasm-opt -Oz target/$PROJNAME.wasm -o target/$PROJNAME-opt.wasm &&
+wasm-prune --exports call,deploy target/$PROJNAME-opt.wasm target/$PROJNAME-pruned.wasm
+```
+
+This file will be used to compile your contract source code to WASM. You can see that it depends on the Wasm utilities we installed earlier.
+
+To compile the smart contract, we need to make the build script executable with `chmod` and then we can run it:
+
+```bash
+chmod +x build.sh
+./build.sh
+```
+
+If all goes well, you should see a `target` folder being created with 5 relevant files corresponding to the steps in the script:
+
+```
+erc20.wat
+erc20-fixed.wat
+erc20.wasm
+erc20-opt.wasm
+erc20-pruned.wasm
+```
+
+The final, optimized `erc20-pruned.wasm` file is what we will actually deploy to our substrate chain.
+
+### Contract ABI
+
+You will also notice a JSON file which is generated during the build script:
+
+```
+Erc20.json
+```
+
+This is your contract's application binary interface (ABI). Let's take a look inside:
+
+```json
+{
+    "name": "Erc20",
+    "deploy": {
+        "args": []
+    },
+    "messages": [
+        {
+            "name": "flip",
+            "selector": 970692492,
+            "mutates": true,
+            "args": [],
+            "return_type": null
+        },
+        {
+            "name": "get",
+            "selector": 4266279973,
+            "mutates": false,
+            "args": [],
+            "return_type": "bool"
+        }
+    ]
+}
+```
+
+You can see that this file describes the interface that can be used to interact with your contract.
+
+If there are any deployment variables needed when instantiating a new contract, those will be defined in the `deploy` section. All the public functions your contract exposes can be found in `messages` along with its function name, function parameters, return type, and whether the function is read-only.
+
+There is also a `selector` which is a hash of the function name and is used to route your contract calls to the correct function.
+
+The Polkadot UI uses this file to generate a friendly interface for deploying and interacting with your contract. :)
+
+---
+
+**Learn More**
+
+One line in the build script we should call out is:
+
+```bash
+cat target/$PROJNAME.wat | sed "s/(import \"env\" \"memory\" (memory (;0;) 2))/(import \"env\" \"memory\" (memory (;0;) 2 16))/" > target/$PROJNAME-fixed.wat &&
+```
+
+TL;DR, this line is adding a maximum size to the Wasm memory declaration, which by default is not included.
+
+WebAssembly modules can use two parameters to specify how much memory it wants:
+
+1. Initial Size - the size of the memory when it is first imported.
+2. Maximum Size - the maximum size the memory can grow to.
+
+It is encoded like:
+
+```
+(import "env" "memory" (memory <initial> <maximum>))
+```
+
+Maximum can be absent in this case it is implicitly set to 4GB.
+
+---
