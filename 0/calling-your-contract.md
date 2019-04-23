@@ -3,7 +3,7 @@ Calling Your Contract
 
 Now that your contract has been fully deployed, we can start to interact with it! Flipper only has two functions, so we will show you what it's like to play with both of them.
 
-## `get()`
+## get()
 
 If you take a look back at our contract's `deploy()` function, we set the initial value of the Flipper contract to `false`. Let's check that this is the case.
 
@@ -23,7 +23,7 @@ If we take a look, we can actually see our storage value:
 
 While this is not a great long term solution, it works very well for debugging contracts, and is a placeholder for more mature solutions like contract events and dedicated view RPCs which are still under development.
 
-## `flip()`
+## flip()
 
 So let's make the value turn `true` now!
 
