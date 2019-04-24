@@ -33,11 +33,11 @@ flipper
 
 ## Contract Source Code
 
-The ink CLI automatically generates the source code for the "Flipper" contract, which is about the most simple "smart" contract you can build. You can take a sneak peak as to what will come by looking at the source code here:
+The ink CLI automatically generates the source code for the "Flipper" contract, which is about the simplest "smart" contract you can build. You can take a sneak peak as to what will come by looking at the source code here:
 
 [Flipper Example Source Code](https://github.com/paritytech/ink/blob/master/examples/lang/flipper/src/lib.rs)
 
-The Flipper contract is nothing more than a `bool` which gets flipped from true to false through the `flip()` function. We won't go so deep into the details of this source code because we will be walking you through the steps to build a more advance contract!
+The Flipper contract is nothing more than a `bool` which gets flipped from true to false through the `flip()` function. We won't go so deep into the details of this source code because we will be walking you through the steps to build a more advanced contract!
 
 ## Testing Your Contract
 
