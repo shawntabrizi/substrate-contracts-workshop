@@ -8,6 +8,8 @@ Creating an Event
 - Talk about where we place the transfer event:
     - `transfer_impl`
     - `deploy`
+- **NEW** Event syntax for event definition and emitting
+    - Example: [**click**](https://github.com/paritytech/ink/blob/master/examples/lang/events/src/lib.rs)
 
 <!-- tabs:start -->
 
