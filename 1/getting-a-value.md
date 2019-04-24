@@ -35,7 +35,7 @@ impl MyContract {
 
 You can also choose to split things up however is most clear for your project.
 
-Note that all public functions are prefixed with not only `pub` but `pub(external)`. Marking a function as `pub` will do normal Rust things, but will not be good enough to make the function callable using Substrate smart contract platform.
+Note that all public functions must be prefixed with `pub(external)`, not just `pub`.
 
 ## Storage Value API
 
