@@ -73,7 +73,7 @@ contract! {
 
 Here we see that after we `get` the value from `my_number_map` we call `unwrap_or` which will either `unwrap` the value stored in storage, _or_ if there is no value, return some known value. Then, when building functions that interact with this HashMap, you need to always remember to call this function rather than getting the value directly.
 
-Let's take a look at some common scenarios:
+Here is an example:
 
 ```rust
 contract! {
@@ -102,19 +102,6 @@ contract! {
             println(&format!("Your value is {:?}", value));
             value
         }
-
-        // Set the value for the calling AccountId
-        pub(external) fn set_my_number(&mut self, value: u32) {
-            let caller = env.caller();
-            self.my_number_map.insert(caller, value);
-        }
-
-        // Add a value to the existing value for the calling AccountId
-        pub(external) fn add_my_number(&mut self, value: u32) {
-            let caller = env.caller();
-            let my_number = self.my_number_or_zero(&caller);
-            self.my_number_map.insert(caller, my_number + value);
-        }
     }
 
     impl MyContract {
@@ -127,11 +114,9 @@ contract! {
 }
 ```
 
-Note how we can always `insert` the value without worry, as that initialized the value in storage, but before you can get or modify anything, we need to call `my_number_or_zero`.
-
 ## Contract Caller
 
-As you might have noticed in the examples above, we use a special function called `env.caller()`. This function is available throughout the contract logic and will always return to you the contract caller.
+As you might have noticed in the example above, we use a special function called `env.caller()`. This function is available throughout the contract logic and will always return to you the contract caller.
 
 > **NOTE:** The contract caller is not the same as the origin caller. If a user triggers a contract which then calls a subsequent contract, the `env.caller()` in the second contract will be the address of the first contract, not the original user. Today, we cannot make contract to contract calls, but this will be added in the future, and we may elaborate on these details at that time.
 
