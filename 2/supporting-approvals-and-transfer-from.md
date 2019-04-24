@@ -44,17 +44,44 @@ pub(external) fn approve(&mut self, spender: AccountId, value: Balance) -> bool 
 
 When you call the `approve` function, you simply insert the `value` specified into storage. The `owner` is always the `env.caller()`, ensuring that the function call is always authorized.
 
+### Transfer From
+
+Finally, once we have set up an approval for one account to spend on-behalf-of another, we need to create a special `transfer_from` function which enables an approved user to transfer those funds.
+
+As mentioned earlier, we will take advantage of the `transfer_impl` to do the bulk of our transfer logic. All we need to introduce is the _authorization_ logic again.
+
+So what does it mean to be authorized to call this function?
+
+1. The `env.caller()` must have some allowance to spend funds from the `from` account.
+2. The allowance must not be less than the value trying to be transferred.
+
+In code, that can easily be represented like so:
+
+```rust
+let allowance = self.allowance_or_zero(&from, &env.caller());
+if allowance < value {
+    return false
+}
+```
+
+Again, we exit early and return false if our authorization does not pass.
+
+If everything looks good though, we simply `insert` the updated allowance into the `allowance` HashMap (`let new_allowance = allowance - value`), and call the `transfer_impl` between the specified `from` and `to` accounts.
+
+## Be Careful!
+
+If you glaze over the logic of this function too quickly, you may introduce a bug into your smart contract. Remember when calling `transfer_from`, the `env.caller()` and the `from` account is used to look up the current allowance, but the `transfer_from` function is called between the `from` and `to` account specified.
+
+There are three account variables in play whenever `transfer_from` is called, and you need to make sure to use them correctly! Hopefully our test will catch any mistake you make.
 
 
+## Your Turn!
 
-- Talk about what `approve` and `tranfer_from` do
-- Talk about the new storage item
-    - Talk about using a tuple
-    - Creating a new `allowance_or_zero`
-    - Creating a new getter
-- Talk about the trickiness around checking approval with `env.caller()` but then making transfers with `to` and `from`
-- Everything else should be mostly the same
+You are almost there! This is the last piece of the ERC20 token contract.
 
+Follow the `ACTION`s in the contract template to finish your ERC20 implementation.
+
+Remember to run `cargo test --features test-env` to test your work.
 
 <!-- tabs:start -->
 
