@@ -5,7 +5,7 @@
 
 > Learn to build smart contracts with Parity ink!
 
-[Get Started](README.md)
+[Get Started](0/introduction.md)
 [GitHub](https://github.com/shawntabrizi/substrate-contracts-workshop)
 
 <!-- Overwrite Background Image with black -->
