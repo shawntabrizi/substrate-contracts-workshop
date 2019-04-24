@@ -48,6 +48,8 @@ Follow the `ACTION`s in the template code.
 
 TODO: Make this better.
 
+Remember to run `cargo test --features test-env` to test your work.
+
 <!-- tabs:start -->
 
 #### ** Template **

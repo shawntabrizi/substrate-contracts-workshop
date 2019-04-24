@@ -109,6 +109,8 @@ Follow the `ACTION`s in the template.
 
 TODO: Add more content.
 
+Remember to run `cargo test --features test-env` to test your work.
+
 <!-- tabs:start -->
 
 #### ** Template **
