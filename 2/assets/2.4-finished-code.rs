@@ -92,9 +92,6 @@ contract! {
         /// on the behalf of the message's sender.
         pub(external) fn approve(&mut self, spender: AccountId, value: Balance) -> bool {
             let owner = env.caller();
-            if owner == spender || value == 0 {
-                return false
-            }
             self.allowances.insert((owner, spender), value);
             deposit_event(Event::Approval {
                 owner: owner,

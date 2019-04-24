@@ -88,17 +88,11 @@ contract! {
         /// Approve the passed AccountId to spend the specified amount of tokens
         /// on the behalf of the message's sender.
         pub(external) fn approve(&mut self, spender: AccountId, value: Balance) -> bool {
-            let owner = env.caller();
-            if owner == spender || value == 0 {
-                return false
-            }
-            self.allowances.insert((owner, spender), value);
-            deposit_event(Event::Approval {
-                owner: owner,
-                spender: spender,
-                value: value
-            });
-            true
+            // ACTION: Get the `env.caller()` and store it as the `owner`
+            // ACTION: Insert the new allowance into the `allowances` HashMap
+            //   HINT: The key tuple is `(owner, spender)`
+            // ACTION: Deposit the `Approval` event you created using these values
+            // ACTION: Return true if everything was successful
         }
 
         /// Transfer tokens from one AccountId to another.
