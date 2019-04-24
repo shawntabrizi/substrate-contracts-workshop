@@ -3,6 +3,12 @@ Setup
 
 To follow this tutorial, you will need to set up some stuff on your computer.
 
+Make sure your Rust version is somewhat up to date.
+In order to be able to compile the code in the following workshop, you will need to add the target:
+```bash
+rustup target add wasm32-unknown-unknown
+```
+
 ## Substrate
 To get started, you need to make sure your computer is set up to build and run Substrate.
 
