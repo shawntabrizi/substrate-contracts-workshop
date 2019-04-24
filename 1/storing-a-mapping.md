@@ -50,33 +50,119 @@ As mentioned a number of times throughout this tutorial, not initializing storag
 So given `my_number_map`, imagine we wanted the default value for any given key to be `0`. We can build a function like this:
 
 ```rust
-struct MyContract {
-    // Store a mapping from AccountIds to a u32
-    my_number_map: storage::HashMap<AccountId, u32>,
-}
-
-impl Deploy for MyContract {
-    fn deploy(&mut self) {
+contract! {
+    struct MyContract {
+        // Store a mapping from AccountIds to a u32
+        my_number_map: storage::HashMap<AccountId, u32>,
     }
-}
 
-impl MyContract {
-    /// Returns the number for an AccountId or 0 if it is not set.
-    fn my_number_or_zero(&self, of: &AccountId) -> u32 {
-        let balance = self.my_number_map.get(of).unwrap_or(&0);
-        *balance
+    impl Deploy for MyContract {
+        fn deploy(&mut self) {
+        }
+    }
+
+    impl MyContract {
+        /// Returns the number for an AccountId or 0 if it is not set.
+        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+            let balance = self.my_number_map.get(of).unwrap_or(&0);
+            *balance
+        }
     }
 }
 ```
 
-Here we see that after we `get` the value from `my_number_map` we call `unwrap_or` which will either `unwrap` the value stored in storage, _or_ if there is no value, return some known value.
+Here we see that after we `get` the value from `my_number_map` we call `unwrap_or` which will either `unwrap` the value stored in storage, _or_ if there is no value, return some known value. Then, when building functions that interact with this HashMap, you need to always remember to call this function rather than getting the value directly.
 
-Then, when building functions that interact with this HashMap, you need to always remember to call this function rather than getting the value directly.
+Let's take a look at some common scenarios:
 
-- Talk about adding a `HashMap`
-- Talk about getting/setting a `HashMap`
-- Talk about making a `my_value_or_zero`
+```rust
+contract! {
+    struct MyContract {
+        // Store a mapping from AccountIds to a u32
+        my_number_map: storage::HashMap<AccountId, u32>,
+    }
 
+    impl Deploy for MyContract {
+        fn deploy(&mut self) {
+        }
+    }
+
+    impl MyContract {
+        // Get the value for a given AccountId
+        pub(external) fn get(&self, of: AccountId) -> u32 {
+            let value = self.my_number_or_zero(&of);
+            println(&format!("{:?} as a value of {:?}", of, value));
+            value
+        }
+
+        // Get the value for the calling AccountId
+        pub(external) fn get_my_number(&self) -> u32 {
+            let caller = env.caller();
+            let value = self.my_number_or_zero(&caller);
+            println(&format!("Your value is {:?}", value));
+            value
+        }
+
+        // Set the value for the calling AccountId
+        pub(external) fn set_my_number(&mut self, value: u32) {
+            let caller = env.caller();
+            self.my_number_map.insert(caller, value);
+        }
+
+        // Add a value to the existing value for the calling AccountId
+        pub(external) fn add_my_number(&mut self, value: u32) {
+            let caller = env.caller();
+            let my_number = self.my_number_or_zero(&caller);
+            self.my_number_map.insert(caller, my_number + value);
+        }
+    }
+
+    impl MyContract {
+        /// Returns the number for an AccountId or 0 if it is not set.
+        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+            let value = self.my_number_map.get(of).unwrap_or(&0);
+            *value
+        }
+    }
+}
+```
+
+Note how we can always `insert` the value without worry, as that initialized the value in storage, but before you can get or modify anything, we need to call `my_number_or_zero`.
+
+## Contract Caller
+
+As you might have noticed in the examples above, we use a special function called `env.caller()`. This function is available throughout the contract logic and will always return to you the contract caller.
+
+> **NOTE:** The contract caller is not the same as the origin caller. If a user triggers a contract which then calls a subsequent contract, the `env.caller()` in the second contract will be the address of the first contract, not the original user. Today, we cannot make contract to contract calls, but this will be added in the future, and we may elaborate on these details at that time.
+
+`env.caller()` can be used a number of different ways. In the examples above, we are basically creating an "access control" layer which allows a user to modify their own value, but no one else can. You can also do things like define a contract owner during contract deployment:
+
+```rust
+contract! {
+    struct MyContract {
+        // Store a contract owner
+        owner: storage::Value<AccountId>,
+    }
+
+    impl Deploy for MyContract {
+        /// Allows the user to initialize `owner` with the contract caller
+        fn deploy(&mut self) {
+            self.owner.set(env.caller());
+        }
+    }
+    ...
+}
+```
+
+Then you can write permissioned functions which checks that the current caller is the owner of the contract.
+
+## Your Turn!
+
+Follow the `ACTION`s in the template code to introduce a storage map to your contract.
+
+TODO: Make this better.
+
+Remember to run `cargo test --features test-env` to test your work.
 
 <!-- tabs:start -->
 
