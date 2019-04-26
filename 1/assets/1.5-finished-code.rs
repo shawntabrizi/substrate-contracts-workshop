@@ -51,6 +51,6 @@ mod tests {
     fn incrementer_works() {
         let contract = Incrementer::deploy_mock(5);
         assert_eq!(contract.get(), 5);
-        assert_eq!(contract.get_mine(), 5);
+        assert_eq!(contract.get_mine(), 0);
     }
 }
