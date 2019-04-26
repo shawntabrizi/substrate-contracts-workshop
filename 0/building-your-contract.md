@@ -40,7 +40,7 @@ flipper-opt.wasm
 flipper-pruned.wasm
 ```
 
-The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our substrate chain.
+The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our Substrate chain.
 
 ## Contract ABI
 
@@ -50,7 +50,7 @@ You will also notice a JSON file which is generated during the build script:
 Flipper.json
 ```
 
-This is your contract's application binary interface (ABI). Let's take a look inside:
+This is your contract's Application Binary Interface (ABI). Let's take a look inside:
 
 ```json
 {
@@ -85,6 +85,8 @@ There is also a `selector` which is a hash of the function name and is used to r
 
 The Polkadot UI uses this file to generate a friendly interface for deploying and interacting with your contract. :)
 
+In the next section we will configure the Polkadot UI.
+
 ---
 
 **Learn More**
@@ -108,6 +110,6 @@ It is encoded like:
 (import "env" "memory" (memory <initial> <maximum>))
 ```
 
-Maximum can be absent in this case it is implicitly set to 4GB.
+If Maximum Size is absent then it is implicitly set to 4GB.
 
 ---
