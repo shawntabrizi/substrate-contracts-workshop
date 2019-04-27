@@ -1,6 +1,6 @@
 # Substrate Contracts Workshop
 
-This is a self-guided tutorial which will teach you how to build [Wasm](https://webassembly.org/) smart contracts on [Parity Substrate] using [Parity ink!](https://github.com/paritytech/ink/).
+This is a self-guided tutorial which will teach you how to build [Wasm](https://webassembly.org/) smart contracts on [Parity Substrate](https://github.com/paritytech/substrate) using [Parity ink!](https://github.com/paritytech/ink/).
 
 This workshop is still under development, and we plan to write additional content:
 
