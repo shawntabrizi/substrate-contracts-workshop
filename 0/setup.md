@@ -4,6 +4,7 @@ Setup
 To follow this tutorial, you will need to set up some stuff on your computer.
 
 ## Substrate
+
 To get started, you need to make sure your computer is set up to build and run Substrate.
 
 If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
