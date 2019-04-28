@@ -3,12 +3,6 @@ Setup
 
 To follow this tutorial, you will need to set up some stuff on your computer.
 
-Make sure your Rust version is somewhat up to date.
-In order to be able to compile the code in the following workshop, you will need to add the target:
-```bash
-rustup target add wasm32-unknown-unknown
-```
-
 ## Substrate
 To get started, you need to make sure your computer is set up to build and run Substrate.
 
@@ -22,6 +16,17 @@ In addition to installing prerequisite libraries, this command will also install
 
 If you are using another operating system, like Windows, follow the installation instructions on the [Substrate readme](https://github.com/paritytech/substrate#61-hacking-on-substrate).
 
+## Wasm Build Environment
+
+Next you need to set up the Wasm build environment within Rust:
+
+```bash
+rustup update nightly
+rustup update stable
+
+rustup target add wasm32-unknown-unknown --toolchain nightly
+```
+
 ## Wasm Utilities
 
 Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate these files for use on Substrate, you will need to install some Wasm utilities:
@@ -31,14 +36,6 @@ Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate t
 * [Parity wasm-utils](https://github.com/paritytech/wasm-utils)
 
 Depending on your operating system, the installation instruction may be different:
-
-**Linux**:
-
-```
-apt install binaryen
-apt install wabt
-cargo install pwasm-utils-cli --bin wasm-prune
-```
 
 **Mac OS**:
 
@@ -61,4 +58,4 @@ cargo install --force --git https://github.com/paritytech/ink cargo-contract
 ```
 
 You can then use `cargo contract --help` to start exploring the commands made available to you.  
-> **Note**: The ink! CLI is under heavy development and many of its commands are not implemented, yet!
+> **Note**: The ink! CLI is under heavy development and most of its commands are not implemented, yet!
