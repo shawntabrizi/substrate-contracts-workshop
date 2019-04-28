@@ -7,7 +7,7 @@ It's time to let our users modify storage!
 
 You may have noticed that the function templates included `self` as the first parameter of the contract functions. It is through `self` that you gain access to all your contract functions and storage items.
 
-If you are simply reading from the contract storage, you only need to pass `&self`. But if you want to modify storage items, you will need to explicitly mark it as mutable, `&mut self`.
+If you are simply **reading** from the contract storage, you only need to pass `&self`. But if you want to **modify** storage items, you will need to explicitly mark it as mutable, `&mut self`.
 
 ```rust
 impl MyContract {
@@ -31,7 +31,7 @@ However, if you know the value is already set, then you can modify the value in 
 ```rust
 impl MyContract {
     pub(external) fn my_setter(&mut self, new_value: u32) {
-        *self.my_number = new_value;
+        self.my_number = new_value;
     }
 
     pub(external) fn my_adder(&mut self, add_value: u32) {
