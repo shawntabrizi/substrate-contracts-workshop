@@ -39,7 +39,7 @@ Note that all public functions must be prefixed with `pub(external)`, not just `
 
 ## Storage Value API
 
-Without going into so much detail, storage values are a part of the underlying ink! core layer. In the background, they use a more primitive `cell` type which holds an `Option<T>`. When we try to get the value from storage, we `unwrap` the value, which is why if it is not initialized, that the contract panics!
+Without going into so much detail, storage values are a part of the underlying ink! core layer. In the background, they use a more primitive `cell` type which holds an `Option<T>`. When we try to get the value from storage, we `unwrap` the value, which is why it panics if it is not initialized!
 
 From [core/storage/value.rs](https://github.com/paritytech/ink/blob/master/core/src/storage/value.rs):
 
@@ -65,7 +65,7 @@ where
 }
 ```
 
-In that same file, you can find the other APIs exposed by storage values, however these three at the most commonly used.
+In that same file, you can find the other APIs exposed by storage values, however these three are the most commonly used.
 
 ## Getting a Value
 
@@ -80,9 +80,9 @@ impl MyContract {
 }
 ```
 
-You should take notice that the `get` API returns a _reference_ to the value, so to actually get the value you need to dereference it with an asterisks (`*`).
+You should take notice that the `get` API returns a _reference_ to the value, so to actually get the value you need to dereference it with an asterisks (`*`). In Rust, if the last expression in a function does not have a semicolon, then it will be the return value.
 
-You can also drop `.get()` implicitly get the value:
+You can also drop `.get()` to implicitly get the value:
 
 ```rust
 impl MyContract {
