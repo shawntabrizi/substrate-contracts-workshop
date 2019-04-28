@@ -33,7 +33,8 @@ Here are some of the most common functions you might use:
     /// and the old value is returned.
     pub fn insert(&mut self, key: K, val: V) -> Option<V> {...}
 
-    /// Removes a key from the map, returning the value at the key if the key was previously in the map.
+    /// Removes a key from the map, returning the value at the key if the key
+    /// was previously in the map.
     pub fn remove<Q>(&mut self, key: &Q) -> Option<V> {...}
 
     /// Returns an immutable reference to the value corresponding to the key.
