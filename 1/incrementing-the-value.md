@@ -7,7 +7,7 @@ It's time to let our users modify storage!
 
 You may have noticed that the function templates included `self` as the first parameter of the contract functions. It is through `self` that you gain access to all your contract functions and storage items.
 
-If you are simply **reading** from the contract storage, you only need to pass `&self`. But if you want to **modify** storage items, you will need to explicitly mark it as mutable, `&mut self`.
+If you are simply _reading_ from the contract storage, you only need to pass `&self`. But if you want to _modify_ storage items, you will need to explicitly mark it as mutable, `&mut self`.
 
 ```rust
 impl MyContract {
