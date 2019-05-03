@@ -24,7 +24,7 @@ In the **Code** section, select a _deployment account_ with some account balance
 
 ![Contracts code page for deploying Flipper](./assets/flipper-code-page.png)
 
-After you press **Deploy** and a new block is formed, an extrinsic event is emitted with `contract.codeStored`. This means that you have successfully stored your WASM contract on your Substrate blockchain!
+After you press **Deploy** and a new block is formed, a system event is emitted with `contract.CodeStored`. This means that you have successfully stored your WASM contract on your Substrate blockchain!
 
 ## Creating an Instance of Your Contract
 
@@ -34,7 +34,7 @@ You will notice on the **Contracts** tab there is a new section called **Instanc
 
 ![An image of the Contracts Instance Page](./assets/flipper-instance-page.png)
 
-The _code for this contract_ is automatically set to the flipper contract you published, but you can imagine if you created multiple contracts, that you would be able to choose from a drop down of options.
+The _code for this contract_ is automatically set to the last contract you published. You would be able to choose from a drop down of previous contracts if you created others in the past.
 
 To instantiate our contract we just need to give this contract account an _endowment_ of 1000 and again set the _maximum gas allowed_ to `500,000` units.
 
