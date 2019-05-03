@@ -33,11 +33,12 @@ chmod +x build.sh
 If all goes well, you should see a `target` folder being created with 5 relevant files corresponding to the steps in the script:
 
 ```
-flipper.wat
-flipper-fixed.wat
-flipper.wasm
-flipper-opt.wasm
-flipper-pruned.wasm
+target
+├── flipper-fixed.wat
+├── flipper-opt.wasm
+├── flipper-pruned.wasm
+├── flipper.wasm
+└── flipper.wat
 ```
 
 The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our Substrate chain.

@@ -28,6 +28,13 @@ rustup update stable
 rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
+While ink! is pinned to a specific nightly version of the Rust compiler you will need to explicitly install that toolchain:
+
+```bash
+rustup install nightly-2019-04-20
+rustup target add wasm32-unknown-unknown --toolchain nightly-2019-04-20
+```
+
 ## Wasm Utilities
 
 Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate these files for use on Substrate, you will need to install some Wasm utilities:
@@ -43,6 +50,15 @@ Depending on your operating system, the installation instruction may be differen
 ```bash
 brew install binaryen
 brew install wabt
+cargo install pwasm-utils-cli --bin wasm-prune
+```
+
+**Arch Linux**:
+
+```bash
+# Using the `yay` AUR helper.
+yay -Syu binaryen
+sudo pacman -Syu wabt
 cargo install pwasm-utils-cli --bin wasm-prune
 ```
 

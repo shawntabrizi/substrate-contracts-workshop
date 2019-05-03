@@ -52,7 +52,7 @@ cargo test --features test-env
 To which you should see a successful test completion:
 
 ```bash
-Shawns-MBP:flipper shawntabrizi$ cargo test --features test-env
+$ cargo test --features test-env
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
      Running target/debug/deps/flipper-03a085eedcb655b9
 
