@@ -93,4 +93,8 @@ Remember to run `cargo test --features test-env` to test your work.
 
 [embedded-code-final](./assets/2.4-finished-code.rs ':include :type=code embed-final')
 
+#### ** Previous Solution **
+
+[embedded-code-previous](./assets/2.3-finished-code.rs ':include :type=code embed-previous')
+
 <!-- tabs:end -->

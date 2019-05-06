@@ -2,6 +2,7 @@
 
 use ink_core::{
     env::{
+        self,
         AccountId,
         Balance,
     },
@@ -11,7 +12,6 @@ use ink_core::{
 use ink_lang::contract;
 
 contract! {
-    /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
@@ -50,8 +50,7 @@ contract! {
     impl Erc20 {
         /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            let balance = self.balances.get(of).unwrap_or(&0);
-            *balance
+            *self.balances.get(of).unwrap_or(&0)
         }
 
         /// Transfers token from a specified AccountId to another AccountId.

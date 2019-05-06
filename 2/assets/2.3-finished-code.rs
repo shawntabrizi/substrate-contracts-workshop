@@ -1,9 +1,5 @@
 #![cfg_attr(not(any(test, feature = "test-env")), no_std)]
 
-use parity_codec::{
-    Decode,
-    Encode,
-};
 use ink_core::{
     env::{
         self,
@@ -15,22 +11,14 @@ use ink_core::{
 };
 use ink_lang::contract;
 
-/// Events deposited by the ERC20 token contract.
-#[derive(Encode, Decode)]
-enum Event {
-    Transfer {
+contract! {
+    // Event emitted when a token transfer occurs
+    event Transfer {
         from: Option<AccountId>,
         to: Option<AccountId>,
         value: Balance,
-    },
-}
+    }
 
-/// Deposits an ERC20 token event.
-fn deposit_event(event: Event) {
-    env::deposit_raw_event(&event.encode()[..])
-}
-
-contract! {
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
@@ -42,7 +30,7 @@ contract! {
         fn deploy(&mut self, init_value: Balance) {
             self.total_supply.set(init_value);
             self.balances.insert(env.caller(), init_value);
-            deposit_event(Event::Transfer { 
+            env.emit(Transfer { 
                 from: None,
                 to: Some(env.caller()),
                 value: init_value
@@ -67,19 +55,18 @@ contract! {
 
         /// Transfers token from the sender to the `to` AccountId.
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
-            self.transfer_impl(env.caller(), to, value)
+            self.transfer_impl(env, env.caller(), to, value)
         }
     }
 
     impl Erc20 {
         /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            let balance = self.balances.get(of).unwrap_or(&0);
-            *balance
+            *self.balances.get(of).unwrap_or(&0)
         }
 
         /// Transfers token from a specified AccountId to another AccountId.
-        fn transfer_impl(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
+        fn transfer_impl(&mut self, env: &mut ink_model::EnvHandler, from: AccountId, to: AccountId, value: Balance) -> bool {
             let balance_from = self.balance_of_or_zero(&from);
             let balance_to = self.balance_of_or_zero(&to);
             if balance_from < value {
@@ -87,7 +74,7 @@ contract! {
             }
             self.balances.insert(from, balance_from - value);
             self.balances.insert(to, balance_to + value);
-            deposit_event(Event::Transfer { 
+            env.emit(Transfer { 
                 from: Some(from),
                 to: Some(to),
                 value: value
@@ -130,5 +117,21 @@ mod tests {
         // Check Alice and Bob have the expected balance
         assert_eq!(erc20.balance_of(alice), 1000);
         assert_eq!(erc20.balance_of(bob), 234);
+    }
+
+    #[test]
+    fn events_work() {
+        let alice = AccountId::try_from([0x0; 32]).unwrap();
+        let bob = AccountId::try_from([0x1; 32]).unwrap();
+
+        // No events to start
+        env::test::set_caller(alice);
+        assert_eq!(env::test::emitted_events().count(), 0);
+        // Event should be emitted for initial minting
+        let mut erc20 = Erc20::deploy_mock(1234);
+        assert_eq!(env::test::emitted_events().count(), 1);
+        // Event should be emitted for transfers
+        assert_eq!(erc20.transfer(bob, 10), true);
+        assert_eq!(env::test::emitted_events().count(), 2);
     }
 }

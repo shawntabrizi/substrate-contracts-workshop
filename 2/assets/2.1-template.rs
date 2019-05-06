@@ -2,6 +2,7 @@
 
 use ink_core::{
     env::{
+        self,
         AccountId,
         Balance,
     },
@@ -55,7 +56,7 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn transfer_works() {
+    fn deployment_works() {
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         env::test::set_caller(alice);
 

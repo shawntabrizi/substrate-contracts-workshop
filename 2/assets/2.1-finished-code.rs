@@ -2,6 +2,7 @@
 
 use ink_core::{
     env::{
+        self,
         AccountId,
         Balance,
     },
@@ -44,8 +45,7 @@ contract! {
     impl Erc20 {
         /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            let balance = self.balances.get(of).unwrap_or(&0);
-            *balance
+            *self.balances.get(of).unwrap_or(&0)
         }
     }
 }
@@ -56,7 +56,7 @@ mod tests {
     use std::convert::TryFrom;
 
     #[test]
-    fn transfer_works() {
+    fn deployment_works() {
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         env::test::set_caller(alice);
 

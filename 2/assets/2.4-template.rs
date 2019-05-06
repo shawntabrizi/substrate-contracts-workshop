@@ -1,9 +1,5 @@
 #![cfg_attr(not(any(test, feature = "test-env")), no_std)]
 
-use parity_codec::{
-    Decode,
-    Encode,
-};
 use ink_core::{
     env::{
         self,
@@ -15,26 +11,20 @@ use ink_core::{
 };
 use ink_lang::contract;
 
-/// Events deposited by the ERC20 token contract.
-#[derive(Encode, Decode)]
-enum Event {
-    Transfer {
+contract! {
+    // Event emitted when a token transfer occurs
+    event Transfer {
         from: Option<AccountId>,
         to: Option<AccountId>,
         value: Balance,
-    },
+    }
+
+    // Event emitted when an approval occurs
     // ACTION: Create an `Approval` event with:
     //         * owner: AccountId
     //         * spender: AccountId
     //         * value: Balance
-}
 
-/// Deposits an ERC20 token event.
-fn deposit_event(event: Event) {
-    env::deposit_raw_event(&event.encode()[..])
-}
-
-contract! {
     /// The storage items for a typical ERC20 token implementation.
     struct Erc20 {
         /// The total supply.
@@ -50,7 +40,7 @@ contract! {
         fn deploy(&mut self, init_value: Balance) {
             self.total_supply.set(init_value);
             self.balances.insert(env.caller(), init_value);
-            deposit_event(Event::Transfer { 
+            env.emit(Transfer { 
                 from: None,
                 to: Some(env.caller()),
                 value: init_value
@@ -82,7 +72,7 @@ contract! {
 
         /// Transfers token from the sender to the `to` AccountId.
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
-            self.transfer_impl(env.caller(), to, value)
+            self.transfer_impl(env, env.caller(), to, value)
         }
 
         /// Approve the passed AccountId to spend the specified amount of tokens
@@ -91,7 +81,7 @@ contract! {
             // ACTION: Get the `env.caller()` and store it as the `owner`
             // ACTION: Insert the new allowance into the `allowances` HashMap
             //   HINT: The key tuple is `(owner, spender)`
-            // ACTION: Deposit the `Approval` event you created using these values
+            // ACTION: `emit` the `Approval` event you created using these values
             // ACTION: Return true if everything was successful
         }
 
@@ -107,18 +97,16 @@ contract! {
     impl Erc20 {
         /// Returns the balance of the AccountId or 0 if there is no balance.
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            let balance = self.balances.get(of).unwrap_or(&0);
-            *balance
+            *self.balances.get(of).unwrap_or(&0)
         }
 
         /// Returns the allowance or 0 of there is no allowance.
         fn allowance_or_zero(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-            // ACTION: Get the allowance between `(owner, spender)` and `unwrap_or` return 0
-            // ACTION: Return the allowance
+            // ACTION: Return the allowance between `(owner, spender)`, `unwrap_or` return 0
         }
 
         /// Transfers token from a specified AccountId to another AccountId.
-        fn transfer_impl(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
+        fn transfer_impl(&mut self, env: &mut ink_model::EnvHandler, from: AccountId, to: AccountId, value: Balance) -> bool {
             let balance_from = self.balance_of_or_zero(&from);
             let balance_to = self.balance_of_or_zero(&to);
             if balance_from < value {
@@ -126,7 +114,7 @@ contract! {
             }
             self.balances.insert(from, balance_from - value);
             self.balances.insert(to, balance_to + value);
-            deposit_event(Event::Transfer { 
+            env.emit(Transfer { 
                 from: Some(from),
                 to: Some(to),
                 value: value
@@ -203,5 +191,24 @@ mod tests {
         assert_eq!(erc20.allowance(alice, bob), 10);
         // and the balance transferred to the right person
         assert_eq!(erc20.balance_of(charlie), 10);
+    }
+
+    #[test]
+    fn events_work() {
+        let alice = AccountId::try_from([0x0; 32]).unwrap();
+        let bob = AccountId::try_from([0x1; 32]).unwrap();
+
+        // No events to start
+        env::test::set_caller(alice);
+        assert_eq!(env::test::emitted_events().count(), 0);
+        // Event should be emitted for initial minting
+        let mut erc20 = Erc20::deploy_mock(1234);
+        assert_eq!(env::test::emitted_events().count(), 1);
+        // Event should be emitted for transfers
+        assert_eq!(erc20.transfer(bob, 10), true);
+        assert_eq!(env::test::emitted_events().count(), 2);
+        // Event should be emitted for approvals
+        assert_eq!(erc20.approve(bob, 20), true);
+        assert_eq!(env::test::emitted_events().count(), 3);
     }
 }
