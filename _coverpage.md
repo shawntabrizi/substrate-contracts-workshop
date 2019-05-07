@@ -1,5 +1,4 @@
-![document-icon](media/document-white.png ':size=300')
-![substrate-logo](media/icon-parity-substrate-light.png ':size=300')
+![substrate-ink](media/substrate-ink.png ':size=300')
 
 # Substrate Contracts Workshop
 
