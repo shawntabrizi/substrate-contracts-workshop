@@ -19,7 +19,7 @@ contract! {
 
 ## Supported Types
 
-Contract storage like `storage::Value<T>` is allowed to be generic over types that are encodable and decodable with [Parity Codec](https://github.com/paritytech/parity-codec) which includes the most common types such as `bool`, `u{16,32,64,128}`, `i{8,16,32,64,128}`, `String`, tuples, and arrays.  Note that `u8` is not currently supported.
+Contract storage like `storage::Value<T>` is allowed to be generic over types that are encodable and decodable with [Parity Codec](https://github.com/paritytech/parity-codec) which includes the most common types such as `bool`, `u{16,32,64,128}`, `i{8,16,32,64,128}`, `String`, tuples, and arrays.  Note that `u8` is [not currently supported](https://github.com/paritytech/parity-codec/issues/47) in `parity_codec`.
 
 ink! also supports Substrate specific types like `AccountId`, `Balance`, and `Hash`. To use some of these non-primitive types, we have to import them from `ink_core::env`. Here is an example of how you would store an `AccountId` and `Balance`:
 
