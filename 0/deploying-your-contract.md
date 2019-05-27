@@ -26,7 +26,7 @@ In the **Code** section, select a _deployment account_ with some account balance
 
 After you press **Deploy** and a new block is formed, a system event is emitted with `contract.CodeStored`. This means that you have successfully stored your WASM contract on your Substrate blockchain!
 
-If you get an `system.ExtrinsicFailed` error message, you may not have allowed enough gas to execute the call.  You can verify that this is the cause by looking at the logs in the terminal; they will show an error stating `Runtime: not enough gas to pay base instantiate fee` or a similar error message.  This may occur on this or any subsequent contract instantiations or calls.  If this occurs, increase the _maximum gas allowed_ argument and try again.
+> **Note**: If you get a `system.ExtrinsicFailed` error message, you may not have allowed enough gas to execute the call.  You can verify that this is the cause by looking at the logs in the terminal. It will show an error stating `Runtime: not enough gas to pay base instantiate fee` or a similar error message.  This may occur on this or any subsequent contract instantiations or calls.  If this occurs, increase the _maximum gas allowed_ argument and try again.
 
 ## Creating an Instance of Your Contract
 
