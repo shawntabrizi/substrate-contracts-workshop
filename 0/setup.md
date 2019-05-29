@@ -28,11 +28,11 @@ rustup update stable
 rustup target add wasm32-unknown-unknown --toolchain nightly
 ```
 
-While ink! is pinned to a specific nightly version of the Rust compiler you will need to explicitly install that toolchain:
+While ink! is pinned to a specific nightly version of the Rust compiler you will need to explicitly install that toolchain. At the time of writing this, it pinned to `nightly-2019-05-21`, but you can look at your `rust-toolchain` if you run into any issues:
 
 ```bash
-rustup install nightly-2019-04-20
-rustup target add wasm32-unknown-unknown --toolchain nightly-2019-04-20
+rustup install nightly-2019-05-21
+rustup target add wasm32-unknown-unknown --toolchain nightly-2019-05-21
 ```
 
 ## Wasm Utilities
