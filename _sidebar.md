@@ -30,5 +30,5 @@
     - [Testing our Contract](2/testing-our-contract.md)
 
 - [Wiki](https://github.com/paritytech/ink/wiki)
-- [Report an Issue](https://github.com/shawntabrizi/substrate-contracts-workshop/issues)
+- [Report an Issue](https://github.com/substrate-developer-hub/substrate-contracts-workshop/issues)
 - [r/substrate](https://www.reddit.com/r/substrate)
