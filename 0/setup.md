@@ -39,7 +39,6 @@ rustup target add wasm32-unknown-unknown --toolchain nightly-2019-05-21
 
 Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate these files for use on Substrate, you will need to install some Wasm utilities:
 
-* [Binaryen](https://github.com/WebAssembly/binaryen)
 * [Wabt](https://github.com/WebAssembly/wabt)
 * [Parity wasm-utils](https://github.com/paritytech/wasm-utils)
 
@@ -48,7 +47,6 @@ Depending on your operating system, the installation instruction may be differen
 **Mac OS**:
 
 ```bash
-brew install binaryen
 brew install wabt
 cargo install pwasm-utils-cli --bin wasm-prune
 ```
@@ -57,12 +55,11 @@ cargo install pwasm-utils-cli --bin wasm-prune
 
 ```bash
 # Using the `yay` AUR helper.
-yay -Syu binaryen
 sudo pacman -Syu wabt
 cargo install pwasm-utils-cli --bin wasm-prune
 ```
 
-We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), `wasm-opt` (binaryen), and `wasm-prune` (wasm-utils) later in the guide.
+We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), and `wasm-prune` (wasm-utils) later in the guide.
 
 ## ink! CLI
 

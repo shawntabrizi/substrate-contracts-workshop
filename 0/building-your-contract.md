@@ -17,8 +17,7 @@ cargo build --release --features generate-api-description --target=wasm32-unknow
 wasm2wat -o target/$PROJNAME.wat target/wasm32-unknown-unknown/release/$PROJNAME.wasm
 cat target/$PROJNAME.wat | sed "s/(import \"env\" \"memory\" (memory (;0;) 2))/(import \"env\" \"memory\" (memory (;0;) 2 16))/" > target/$PROJNAME-fixed.wat
 wat2wasm -o target/$PROJNAME.wasm target/$PROJNAME-fixed.wat
-wasm-opt -Oz target/$PROJNAME.wasm -o target/$PROJNAME-opt.wasm
-wasm-prune --exports call,deploy target/$PROJNAME-opt.wasm target/$PROJNAME-pruned.wasm
+wasm-prune --exports call,deploy target/$PROJNAME.wasm target/$PROJNAME-pruned.wasm
 ```
 
 This file will be used to compile your contract source code to WASM. You can see that it depends on the Wasm utilities we installed earlier.
@@ -35,7 +34,6 @@ If all goes well, you should see a `target` folder being created with 5 relevant
 ```
 target
 ├── flipper-fixed.wat
-├── flipper-opt.wasm
 ├── flipper-pruned.wasm
 ├── flipper.wasm
 └── flipper.wat
