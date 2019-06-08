@@ -54,7 +54,6 @@ cargo install pwasm-utils-cli --bin wasm-prune
 **Arch Linux**:
 
 ```bash
-# Using the `yay` AUR helper.
 sudo pacman -Syu wabt
 cargo install pwasm-utils-cli --bin wasm-prune
 ```
