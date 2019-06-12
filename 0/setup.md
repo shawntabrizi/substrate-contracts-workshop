@@ -57,8 +57,15 @@ cargo install pwasm-utils-cli --bin wasm-prune
 sudo pacman -Syu wabt
 cargo install pwasm-utils-cli --bin wasm-prune
 ```
+** **Alternative (Debian/Ubuntu)**:
+```bash
+curl https://raw.githubusercontent.com/substrate-developer-hub/substrate-contracts-workshop/master/scripts/install-wasm-tools.sh -sSf |bash -s
+```
 
 We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), and `wasm-prune` (wasm-utils) later in the guide.
+
+> ** The Wasm installation tools script will do all of the previous operations for you. The most important one is that it brings compatibility for Debian-based distributions.
+It is important to notice that it will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
 
 ## ink! CLI
 
