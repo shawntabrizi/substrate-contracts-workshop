@@ -20,7 +20,7 @@ contract! {
 
     impl Incrementer {
         pub(external) fn get(&self) -> u64 {
-            println!("{}", &format!("Incrementer::get = {:?}", *self.value));
+            println!("Incrementer::get = {:?}", *self.value);
             *self.value
         }
 
@@ -30,7 +30,7 @@ contract! {
 
         pub(external) fn get_mine(&self) -> u64 {
             let my_value = self.my_value_or_zero(&env.caller());
-            println!("{}", &format!("Incrementer::get_mine = {:?}", my_value));
+            println!("Incrementer::get_mine = {:?}", my_value);
             my_value
         }
 
