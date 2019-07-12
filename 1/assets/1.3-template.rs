@@ -2,10 +2,11 @@
 
 use ink_lang::contract;
 use ink_core::storage;
-use ink_core::env::println;
+use ink_core::env::{ self, DefaultSrmlTypes };
 use ink_core::memory::format;
 
 contract! {
+    #![env = DefaultSrmlTypes]
     struct Incrementer {
         value: storage::Value<u64>,
     }

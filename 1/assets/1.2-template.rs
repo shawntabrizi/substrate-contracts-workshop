@@ -2,8 +2,10 @@
 
 use ink_lang::contract;
 use ink_core::storage;
+use ink_core::env::{ self, DefaultSrmlTypes };
 
 contract! {
+    #![env = DefaultSrmlTypes]
     struct Incrementer {
         // ACTION: Create a `storage::Value` called `value` which holds a `u64`
     }
