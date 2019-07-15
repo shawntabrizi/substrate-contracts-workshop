@@ -27,7 +27,7 @@ Here is an example of how you would store an `AccountId` and `Balance`:
 
 ```rust
 // We are importing the default SRML types
-use ink_core::env::{Self, DefaultSrmlTypes};
+use ink_core::env::DefaultSrmlTypes;
 
 contract! {
     // Our struct will use those default SRML types

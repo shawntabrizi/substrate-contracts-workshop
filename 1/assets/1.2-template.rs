@@ -2,7 +2,7 @@
 
 use ink_lang::contract;
 use ink_core::storage;
-use ink_core::env::{ self, DefaultSrmlTypes };
+use ink_core::env::DefaultSrmlTypes;
 
 contract! {
     #![env = DefaultSrmlTypes]
