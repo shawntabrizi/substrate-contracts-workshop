@@ -22,10 +22,9 @@ wasm-prune --exports call,deploy target/$PROJNAME.wasm target/$PROJNAME-pruned.w
 
 This file will be used to compile your contract source code to WASM. You can see that it depends on the Wasm utilities we installed earlier.
 
-To compile the smart contract, we need to make the build script executable with `chmod` and then we can run it:
+To compile the smart contract, we need to run it:
 
 ```bash
-chmod +x build.sh
 ./build.sh
 ```
 

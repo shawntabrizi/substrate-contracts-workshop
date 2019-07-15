@@ -3,19 +3,23 @@ Setup
 
 To follow this tutorial, you will need to set up some stuff on your computer.
 
-## Substrate
+> **Note:** For the purposes of stability, we will be using Substrate v1.0 for this tutorial. In addition to the steps below, please download the [`substrate-package` for contract development](https://github.com/shawntabrizi/substrate-package/tree/contract).
+>
+> This will include a `substrate-node-template` with the Contract module included in your node. It also includes an `ink-contract-template` where you can start to build your smart contract.
+>
+> Please use this package for the remainder of the tutorial.
 
-To get started, you need to make sure your computer is set up to build and run Substrate.
+## Substrate Prerequisites
+
+To get started, you need to make sure your computer is set up to build Substrate.
 
 If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
 
 ```bash
-curl https://getsubstrate.io -sSf | bash
+curl https://getsubstrate.io -sSf | bash -s -- --fast
 ```
 
-In addition to installing prerequisite libraries, this command will also install the `substrate` command to your path so that you can start a substrate node easily.
-
-If you are using another operating system, like Windows, follow the installation instructions on the [Substrate readme](https://github.com/paritytech/substrate#61-hacking-on-substrate).
+If you are using another operating system, like Windows, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
 
 ## Wasm Build Environment
 

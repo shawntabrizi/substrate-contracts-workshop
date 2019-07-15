@@ -9,6 +9,8 @@ Make sure you are in your working directory, and then run:
 cargo contract new flipper
 ```
 
+> **Reminder:** You should use the `ink-contract-template` from the [`substrate-package`](https://github.com/shawntabrizi/substrate-package/tree/contract) rather than the steps above for stability purposes.
+
 This command will create a new project folder named `flipper` which we will explore:
 
 ```
