@@ -19,7 +19,7 @@ contract! {
 
     impl Incrementer {
         pub(external) fn get(&self) -> u64 {
-            // ACTION: Use `println` to print the value of `self.value`
+            // ACTION: Use `env.println` to print the value of `self.value`
             // ACTION: Return `self.value`
         }
     }
