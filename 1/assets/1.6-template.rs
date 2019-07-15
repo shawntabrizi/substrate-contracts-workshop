@@ -2,8 +2,8 @@
 
 use ink_lang::contract;
 use ink_core::storage;
-use ink_core::memory::format;
 use ink_core::env::DefaultSrmlTypes;
+use ink_core::memory::format;
 
 contract! {
     #![env = DefaultSrmlTypes]
