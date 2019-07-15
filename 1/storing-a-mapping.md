@@ -79,6 +79,7 @@ Here is an example:
 ```rust
 contract! {
     #![env = DefaultSrmlTypes]
+    
     struct MyContract {
         // Store a mapping from AccountIds to a u32
         my_number_map: storage::HashMap<AccountId, u32>,

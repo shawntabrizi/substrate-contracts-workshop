@@ -6,6 +6,7 @@ use ink_core::env::DefaultSrmlTypes;
 
 contract! {
     #![env = DefaultSrmlTypes]
+    
     struct Incrementer {
         // Storage Declaration
     }

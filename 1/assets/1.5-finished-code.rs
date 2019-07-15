@@ -7,6 +7,7 @@ use ink_core::memory::format;
 
 contract! {
     #![env = DefaultSrmlTypes]
+    
     struct Incrementer {
         value: storage::Value<u64>,
         my_value: storage::HashMap<AccountId, u64>,

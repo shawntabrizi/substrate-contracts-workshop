@@ -7,6 +7,7 @@ use ink_core::memory::format;
 
 contract! {
     #![env = DefaultSrmlTypes]
+
     struct Incrementer {
         value: storage::Value<u64>,
         my_value: storage::HashMap<AccountId, u64>,
@@ -51,7 +52,7 @@ contract! {
 #[cfg(all(test, feature = "test-env"))]
 mod tests {
     use super::*;
-    use std::convert::TryFrom;
+    use ink_core::env;
 
     #[test]
     fn incrementer_works() {
@@ -66,8 +67,8 @@ mod tests {
     #[test]
     fn my_incrementer_works() {
         let mut contract = Incrementer::deploy_mock(5);
-        let alice = AccountId::try_from([0x0; 32]).unwrap();
-        let bob = AccountId::try_from([0x1; 32]).unwrap();
+        let alice = AccountId::from([0x0; 32]);
+        let bob = AccountId::from([0x1; 32]);
 
         env::test::set_caller::<DefaultSrmlTypes>(alice);
         assert_eq!(contract.get_mine(), 0);
