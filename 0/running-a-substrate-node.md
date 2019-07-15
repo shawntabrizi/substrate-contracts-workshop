@@ -7,6 +7,8 @@ After successfully installing `substrate`, you can start a local development cha
 substrate --dev
 ```
 
+> **Note:** You should use the `substrate-node-template` from the [`substrate-package`](https://github.com/shawntabrizi/substrate-package/tree/contract) rather than the node installed on your computer. Change instances of `substrate` command with `./target/release/node-template`.
+
 ![An image of the terminal starting a Substrate node](./assets/start-substrate-node.png)
 
 > **Note:** If you have run this command in the past, you probably want to purge your chain so that you run through this tutorial with a clean slate. You can do this easily with `substrate purge-chain --dev`.
