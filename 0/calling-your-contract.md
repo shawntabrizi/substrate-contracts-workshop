@@ -19,7 +19,7 @@ If we take a look, we can actually see our storage value:
 
 ![An image of println in the terminal for Flipper with false](./assets/flipper-println-false.png)
 
-> **Note:** `println` is only allowed on `--dev` chains for debugging purposes. If you try to deploy a contract with `println` on a non-dev chain, it will not succeed.
+> **Note:** `env.println` is only allowed on `--dev` chains for debugging purposes. If you try to deploy a contract with `env.println` on a non-dev chain, it will not succeed.
 
 While this is not a great long term solution, it works very well for debugging contracts, and is a placeholder for more mature solutions like contract events and dedicated view RPCs which are still under development.
 

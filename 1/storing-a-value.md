@@ -21,13 +21,17 @@ contract! {
 
 Contract storage like `storage::Value<T>` is allowed to be generic over types that are encodable and decodable with [Parity Codec](https://github.com/paritytech/parity-codec) which includes the most common types such as `bool`, `u{16,32,64,128}`, `i{8,16,32,64,128}`, `String`, tuples, and arrays.  Note that `u8` is [not currently supported](https://github.com/paritytech/parity-codec/issues/47) in `parity_codec`.
 
-ink! also supports Substrate specific types like `AccountId`, `Balance`, and `Hash`. To use some of these non-primitive types, we have to import them from `ink_core::env`. Here is an example of how you would store an `AccountId` and `Balance`:
+ink! also supports Substrate specific types like `AccountId`, `Balance`, and `Hash`. To use some of these non-primitive types, we have to import them from `ink_core::env::DefaultSrmlTypes`. We also have to include `#![env = DefaultSrmlTypes]` to the beginning of our storage `struct`.
+
+Here is an example of how you would store an `AccountId` and `Balance`:
 
 ```rust
-// Note that you will need to import `AccountId` and/or `Balance` to use them
-use ink_core::env::{AccountId, Balance};
+// We are importing the default SRML types
+use ink_core::env::DefaultSrmlTypes;
 
 contract! {
+    // Our struct will use those default SRML types
+    #![env = DefaultSrmlTypes]
     struct MyContract {
         // Store some AccountId
         my_account: storage::Value<AccountId>,
@@ -63,6 +67,7 @@ Every ink! smart contract must implement the `Deploy` trait which consists of a 
 
 ```rust
 contract! {
+    #![env = DefaultSrmlTypes]
     struct MyContract {
         ...
     }
@@ -83,6 +88,7 @@ You can deploy a contract with some configurable parameters so that users can cu
 
 ```rust
 contract! {
+    #![env = DefaultSrmlTypes]
     struct MyContract {
         // Store a number
         my_number: storage::Value<u32>,

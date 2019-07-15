@@ -2,8 +2,10 @@
 
 // Import the `contract!` macro
 use ink_lang::contract;
+use ink_core::env::DefaultSrmlTypes;
 
 contract! {
+    #![env = DefaultSrmlTypes]
     struct Incrementer {
         // Storage Declaration
     }

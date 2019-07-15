@@ -2,11 +2,11 @@
 
 use ink_lang::contract;
 use ink_core::storage;
-use ink_core::env::println;
+use ink_core::env::DefaultSrmlTypes;
 use ink_core::memory::format;
-use ink_core::env::AccountId;
 
 contract! {
+    #![env = DefaultSrmlTypes]
     struct Incrementer {
         value: storage::Value<u64>,
         // ACTION: Add a `HashMap` called `my_value` which maps `AccountId` to `u64`
@@ -20,7 +20,7 @@ contract! {
 
     impl Incrementer {
         pub(external) fn get(&self) -> u64 {
-            println(&format!("Incrementer::get = {:?}", *self.value));
+            env.println(&format!("Incrementer::get = {:?}", *self.value));
             *self.value
         }
 

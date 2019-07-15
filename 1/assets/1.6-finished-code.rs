@@ -2,10 +2,11 @@
 
 use ink_lang::contract;
 use ink_core::storage;
+use ink_core::env::DefaultSrmlTypes;
 use ink_core::memory::format;
-use ink_core::env::{self, println, AccountId};
 
 contract! {
+    #![env = DefaultSrmlTypes]
     struct Incrementer {
         value: storage::Value<u64>,
         my_value: storage::HashMap<AccountId, u64>,
@@ -19,7 +20,7 @@ contract! {
 
     impl Incrementer {
         pub(external) fn get(&self) -> u64 {
-            println(&format!("Incrementer::get = {:?}", *self.value));
+            env.println(&format!("Incrementer::get = {:?}", *self.value));
             *self.value
         }
 
@@ -29,7 +30,7 @@ contract! {
 
         pub(external) fn get_mine(&self) -> u64 {
             let my_value = self.my_value_or_zero(&env.caller());
-            println(&format!("Incrementer::get_mine = {:?}", my_value));
+            env.println(&format!("Incrementer::get_mine = {:?}", my_value));
             my_value
         }
 
@@ -68,14 +69,14 @@ mod tests {
         let alice = AccountId::try_from([0x0; 32]).unwrap();
         let bob = AccountId::try_from([0x1; 32]).unwrap();
 
-        env::test::set_caller(alice);
+        env::test::set_caller::<DefaultSrmlTypes>(alice);
         assert_eq!(contract.get_mine(), 0);
         contract.inc_mine(42);
         assert_eq!(contract.get_mine(), 42);
         contract.inc_mine(0);
         assert_eq!(contract.get_mine(), 42);
-        
-        env::test::set_caller(bob);
+
+        env::test::set_caller::<DefaultSrmlTypes>(bob);
         assert_eq!(contract.get_mine(), 0);
         contract.inc_mine(42);
         assert_eq!(contract.get_mine(), 42);

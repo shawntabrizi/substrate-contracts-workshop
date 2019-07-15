@@ -78,6 +78,7 @@ Here is an example:
 
 ```rust
 contract! {
+    #![env = DefaultSrmlTypes]
     struct MyContract {
         // Store a mapping from AccountIds to a u32
         my_number_map: storage::HashMap<AccountId, u32>,
@@ -92,7 +93,7 @@ contract! {
         // Get the value for a given AccountId
         pub(external) fn get(&self, of: AccountId) -> u32 {
             let value = self.my_number_or_zero(&of);
-            println(&format!("{:?} as a value of {:?}", of, value));
+            env.println(&format!("{:?} as a value of {:?}", of, value));
             value
         }
 
@@ -100,7 +101,7 @@ contract! {
         pub(external) fn get_my_number(&self) -> u32 {
             let caller = env.caller();
             let value = self.my_number_or_zero(&caller);
-            println(&format!("Your value is {:?}", value));
+            env.println(&format!("Your value is {:?}", value));
             value
         }
     }

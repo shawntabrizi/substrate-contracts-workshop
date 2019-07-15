@@ -12,7 +12,7 @@ If you are simply _reading_ from the contract storage, you only need to pass `&s
 ```rust
 impl MyContract {
     pub(external) fn my_getter(&self) -> u32 {
-        println(&format!("my_number is {:?}", *self.my_number));
+        env.println(&format!("my_number is {:?}", *self.my_number));
         *self.my_number
     } 
 
