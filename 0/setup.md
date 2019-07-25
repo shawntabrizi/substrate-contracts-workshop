@@ -52,24 +52,31 @@ Depending on your operating system, the installation instruction may be differen
 
 ```bash
 brew install wabt
-cargo install pwasm-utils-cli --bin wasm-prune
+
+cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
 **Arch Linux**:
 
 ```bash
 sudo pacman -Syu wabt
-cargo install pwasm-utils-cli --bin wasm-prune
+
+cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
-** **Alternative (Debian/Ubuntu)**:
+
+**Ubuntu/Debian**:
+
 ```bash
+sudo apt install -y curl jq tar
+
 curl https://raw.githubusercontent.com/substrate-developer-hub/substrate-contracts-workshop/master/scripts/install-wasm-tools.sh -sSf |bash -s
+
+cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
 We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), and `wasm-prune` (wasm-utils) later in the guide.
 
-> ** The Wasm installation tools script will do all of the previous operations for you. The most important one is that it brings compatibility for Debian-based distributions.
-It is important to notice that it will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
+> ** The Ubuntu/Debian script will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
 
 ## ink! CLI
 
