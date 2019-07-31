@@ -30,13 +30,7 @@ rustup update nightly
 rustup update stable
 
 rustup target add wasm32-unknown-unknown --toolchain nightly
-```
-
-While ink! is pinned to a specific nightly version of the Rust compiler you will need to explicitly install that toolchain. At the time of writing this, it is pinned to `nightly-2019-05-21`, but you can look at your `rust-toolchain` if you run into any issues:
-
-```bash
-rustup install nightly-2019-05-21
-rustup target add wasm32-unknown-unknown --toolchain nightly-2019-05-21
+rustup target add wasm32-unknown-unknown --toolchain stable
 ```
 
 ## Wasm Utilities
@@ -51,16 +45,18 @@ Depending on your operating system, the installation instruction may be differen
 **Mac OS**:
 
 ```bash
+#Install Wasm tools binaries (wasm2wat, wat2wasm)
 brew install wabt
-
+#Install wasm-prune binary
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
 **Arch Linux**:
 
 ```bash
+#Install Wasm tools binaries (wasm2wat, wat2wasm)
 sudo pacman -Syu wabt
-
+#Install wasm-prune binary
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
@@ -68,15 +64,15 @@ cargo install pwasm-utils-cli --bin wasm-prune --force
 
 ```bash
 sudo apt install -y curl jq tar
-
+#Install Wasm tools binaries (wasm2wat, wat2wasm)
 curl https://raw.githubusercontent.com/substrate-developer-hub/substrate-contracts-workshop/master/scripts/install-wasm-tools.sh -sSf |bash -s
-
+#Install wasm-prune binary
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
 We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), and `wasm-prune` (wasm-utils) later in the guide.
 
-> ** The Ubuntu/Debian script will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
+> **Note**: The Ubuntu/Debian script will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
 
 ## ink! CLI
 
@@ -90,3 +86,4 @@ cargo install --force --git https://github.com/paritytech/ink cargo-contract
 
 You can then use `cargo contract --help` to start exploring the commands made available to you.  
 > **Note**: The ink! CLI is under heavy development and most of its commands are not implemented, yet!
+
