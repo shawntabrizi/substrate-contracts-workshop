@@ -3,12 +3,6 @@ Setup
 
 To follow this tutorial, you will need to set up some stuff on your computer.
 
-> **Note:** For the purposes of stability, we will be using Substrate v1.0 for this tutorial. In addition to the steps below, please download the [`substrate-package` for contract development](https://github.com/shawntabrizi/substrate-package/tree/contract).
->
-> This will include a `substrate-node-template` with the Contract module included in your node. It also includes an `ink-contract-template` where you can start to build your smart contract.
->
-> Please use this package for the remainder of the tutorial.
-
 ## Substrate Prerequisites
 
 To get started, you need to make sure your computer is set up to build Substrate.
@@ -16,7 +10,7 @@ To get started, you need to make sure your computer is set up to build Substrate
 If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
 
 ```bash
-curl https://getsubstrate.io -sSf | bash -s -- --fast
+curl https://getsubstrate.io -sSf | bash -s --
 ```
 
 If you are using another operating system, like Windows, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.

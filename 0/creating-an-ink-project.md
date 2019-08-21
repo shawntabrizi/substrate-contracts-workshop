@@ -9,8 +9,6 @@ Make sure you are in your working directory, and then run:
 cargo contract new flipper
 ```
 
-> **Reminder:** You should use the `ink-contract-template` from the [`substrate-package`](https://github.com/shawntabrizi/substrate-package/tree/contract) rather than the steps above for stability purposes.
-
 This command will create a new project folder named `flipper` which we will explore:
 
 ```
@@ -18,7 +16,13 @@ flipper
 |
 +-- .cargo
 |   |
-|   +-- config      <-- Compiler Configuration (Safe Math Flag)
+|   +-- config      <-- Compiler Configuration
++-- .ink
+|   |
+|   +-- abi_gen 
+|       |
+|       +-- Cargo.toml
+|       +-- main.rs
 |
 +-- src
 |   |
@@ -48,13 +52,13 @@ You will see at the bottom of the source code there is a simple test which verif
 In your project folder run:
 
 ```bash
-cargo test --features test-env
+cargo test
 ```
 
 To which you should see a successful test completion:
 
 ```bash
-$ cargo test --features test-env
+$ cargo test
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
      Running target/debug/deps/flipper-03a085eedcb655b9
 
