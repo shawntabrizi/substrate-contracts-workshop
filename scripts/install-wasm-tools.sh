@@ -51,7 +51,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
 			cp -f wasm-install/bin/$bin ~/.cargo/bin/
 		done
 		popd > /dev/null
-	fi
 	else
 		echo "Unknown Linux distribution."
 		echo "This OS is not supported with this script at present. Sorry."
