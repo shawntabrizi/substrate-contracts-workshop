@@ -46,7 +46,7 @@ TODO: Add content which walks a user through reading/modifying uninitialized sto
 
 Follow the `ACTION`s to finish your Incrementer smart contract.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 

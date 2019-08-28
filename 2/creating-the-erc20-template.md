@@ -36,7 +36,7 @@ You need to:
 - Create getters for both storage items
 - Create a `balance_of_or_zero` function to handle reading values from the HashMap
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 

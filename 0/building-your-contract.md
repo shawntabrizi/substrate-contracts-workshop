@@ -41,24 +41,21 @@ target
 The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our Substrate chain.
 
 ## Contract ABI
-
+By running the next command we'll generate the Application Binary Interface (ABI):
 ```
-rustup default nightly
-```
-
-Ink! is a new eDSL (Embedded Domain Specific Language) in development phase and in constant evolution.
-By running the next command we'll generate the abi:
-```
-cargo build --features ink-generate-abi
+cargo +nightly build --features ink-generate-abi
 ```
 
-You should have a new JSON file (`old_abi.json`) in the same target directory. This is your contract's Application Binary Interface (ABI). 
+You should have a new JSON file (`old_abi.json`) in the same target directory. This is your contract's ABI. 
 
-> **Note**: For this tutorial, you will need to generate a JSON file with the previous abi and use nightly to build it.
-> It is important to revert this change to stable release after finishing the tutorial. 
->```
->rustup default stable // Run me after finishing the tutorial
->```
+``` bash
+target
+├── flipper-fixed.wat
+├── flipper-pruned.wasm
+├── flipper.wasm
+├── flipper.wat
+└── old_abi.json
+```
 
 Let's take a look inside:
 

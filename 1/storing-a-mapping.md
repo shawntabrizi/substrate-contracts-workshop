@@ -150,7 +150,7 @@ Follow the `ACTION`s in the template code to introduce a storage map to your con
 
 TODO: Make this better.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 

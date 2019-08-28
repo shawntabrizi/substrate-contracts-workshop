@@ -47,7 +47,7 @@ Follow the `ACTION`s in the template code to build your transfer function.
 
 TODO: make this better.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 

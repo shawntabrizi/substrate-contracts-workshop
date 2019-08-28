@@ -32,10 +32,10 @@ In the `src/lib.rs` file, replace the "Flipper" contract source code with the te
 Quickly check that it compiles and the trivial test passes with:
 
 ```bash
-cargo test --features test-env
+cargo test
 ```
 
-Also check that you can build the Wasm file by running `build.sh`. Remember, you will need to run `chmod +x build.sh` to make the script executable.
+Also check that you can build the Wasm file by running `build.sh`.
 
 If everything looks good, then we are ready to start programming!
 

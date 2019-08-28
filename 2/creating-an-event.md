@@ -74,7 +74,7 @@ TODO:
 
 Follow the ACTIONs in the template code to emit a `Transfer` event every time a token transfer occurs.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 

@@ -81,7 +81,7 @@ You are almost there! This is the last piece of the ERC20 token contract.
 
 Follow the `ACTION`s in the contract template to finish your ERC20 implementation.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo test` to test your work.
 
 <!-- tabs:start -->
 
