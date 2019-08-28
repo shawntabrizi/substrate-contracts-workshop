@@ -10,7 +10,7 @@ To get started, you need to make sure your computer is set up to build Substrate
 If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
 
 ```bash
-curl https://getsubstrate.io -sSf | bash -s --
+curl https://getsubstrate.io -sSf | bash
 ```
 
 If you are using another operating system, like Windows, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
@@ -59,7 +59,7 @@ cargo install pwasm-utils-cli --bin wasm-prune --force
 ```bash
 sudo apt install -y curl jq tar
 #Install Wasm tools binaries (wasm2wat, wat2wasm)
-curl https://raw.githubusercontent.com/substrate-developer-hub/substrate-contracts-workshop/master/scripts/install-wasm-tools.sh -sSf |bash -s
+curl https://raw.githubusercontent.com/paritytech/scripts/master/install-wasm-binaries.sh -sSf |bash -s
 #Install wasm-prune binary
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
