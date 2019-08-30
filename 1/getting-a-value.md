@@ -128,7 +128,7 @@ Follow the `ACTION`s on the code template provided.
 
 TODO: Make this better.
 
-Remember to run `cargo test --features test-env` to test your work.
+Remember to run `cargo +nightly test` to test your work.
 
 <!-- tabs:start -->
 

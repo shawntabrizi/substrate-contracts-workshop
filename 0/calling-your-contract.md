@@ -42,7 +42,7 @@ We will not go over these setup and deployment steps again, but we will use them
 The rest of the tutorial will have **template code** which you will use to walk through the different steps of contract development. Each template comes with a fully designed suite of tests that should pass if you programmed your contract correctly. Before you move on from a section, make sure that you run:
 
 ```bash
-cargo test
+cargo +nightly test
 ```
 
 and that the tests all execute successfully, without any warnings.

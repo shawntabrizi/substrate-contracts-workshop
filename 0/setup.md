@@ -21,9 +21,14 @@ Next you need to set up the Wasm build environment within Rust:
 
 ```bash
 rustup update nightly
+```
+```bash
 rustup update stable
-
+```
+```bash
 rustup target add wasm32-unknown-unknown --toolchain nightly
+```
+```bash
 rustup target add wasm32-unknown-unknown --toolchain stable
 ```
 
@@ -36,31 +41,32 @@ Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate t
 
 Depending on your operating system, the installation instruction may be different:
 
-**Mac OS**:
+### Mac OS:
 
 ```bash
-#Install Wasm tools binaries (wasm2wat, wat2wasm)
 brew install wabt
-#Install wasm-prune binary
-cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
-
-**Arch Linux**:
-
 ```bash
-#Install Wasm tools binaries (wasm2wat, wat2wasm)
-sudo pacman -Syu wabt
-#Install wasm-prune binary
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 
-**Ubuntu/Debian**:
+### Arch Linux:
+```bash
+sudo pacman -Syu wabt
+```
+```bash
+cargo install pwasm-utils-cli --bin wasm-prune --force
+```
+
+### Ubuntu/Debian:
 
 ```bash
 sudo apt install -y curl jq tar
-#Install Wasm tools binaries (wasm2wat, wat2wasm)
+```
+```bash
 curl https://raw.githubusercontent.com/paritytech/scripts/master/install-wasm-binaries.sh -sSf |bash -s
-#Install wasm-prune binary
+```
+```bash
 cargo install pwasm-utils-cli --bin wasm-prune --force
 ```
 

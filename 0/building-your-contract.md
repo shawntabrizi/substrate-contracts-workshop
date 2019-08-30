@@ -42,7 +42,7 @@ The final, optimized `flipper-pruned.wasm` file is what we will actually deploy 
 
 ## Contract ABI
 By running the next command we'll generate the Application Binary Interface (ABI):
-```
+``` bash
 cargo +nightly build --features ink-generate-abi
 ```
 
@@ -59,7 +59,7 @@ target
 
 Let's take a look inside:
 
-```json
+``` JSON
 {
     "name": "Flipper",
     "deploy": {

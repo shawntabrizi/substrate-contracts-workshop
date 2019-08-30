@@ -48,7 +48,7 @@ Follow the `ACTION`s in the template code.
 
 TODO: Make this better.
 
-Remember to run `cargo test` to test your work.
+Remember to run `cargo +nightly test` to test your work.
 
 <!-- tabs:start -->
 

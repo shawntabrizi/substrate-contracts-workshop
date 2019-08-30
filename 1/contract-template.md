@@ -32,7 +32,7 @@ In the `src/lib.rs` file, replace the "Flipper" contract source code with the te
 Quickly check that it compiles and the trivial test passes with:
 
 ```bash
-cargo test
+cargo +nightly test
 ```
 
 Also check that you can build the Wasm file by running `build.sh`.
