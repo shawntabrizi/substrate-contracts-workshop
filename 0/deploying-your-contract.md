@@ -20,7 +20,7 @@ With your Substrate development node running, you can go back to the [Polkadot U
 
 Open the specially designed **Contracts** section of the UI.
 
-In the **Code** section, select a _deployment account_ with some account balance like Alice. In _compiled contract WASM_, select the `flipper-pruned.wasm` file we generated. For the _contract ABI_, select the JSON file. Finally, set the _maximum gas allowed_ to `400,000` units.
+In the **Code** section, select a _deployment account_ with some account balance like Alice. In _compiled contract WASM_, select the `flipper-pruned.wasm` file we generated. For the _contract ABI_, select the JSON file. Finally, set the _maximum gas allowed_ to `500,000` units.
 
 ![Contracts code page for deploying Flipper](./assets/flipper-code-page.png)
 
@@ -38,9 +38,9 @@ You will notice on the **Contracts** tab there is a new section called **Instanc
 
 The _code for this contract_ is automatically set to the last contract you published. You would be able to choose from a drop down of previous contracts if you created others in the past.
 
-To instantiate our contract we just need to give this contract account an _endowment_ of 1000 and again set the _maximum gas allowed_ to `500,000` units.
+To instantiate our contract we just need to give this contract account an _endowment_ of 1000000 and again set the _maximum gas allowed_ to `500,000` units.
 
-> **Note:** As mentioned earlier, contract creation involves creation of a new Account. As such, you must be sure to give the contract account at least the existential deposit defined by your blockchain. This is why we set the `endowment` to `1000`.
+> **Note:** As mentioned earlier, contract creation involves creation of a new Account. As such, you must be sure to give the contract account at least the existential deposit defined by your blockchain. This is why we set the `endowment` to `1000000`.
 
 When you press **Instantiate**, you should see a flurry of events appear including the creation of a new account (`balances.NewAccount`) and the instantiation of the contract (`contract.Instantiated`):
 

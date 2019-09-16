@@ -7,7 +7,7 @@ Now that your contract has been fully deployed, we can start to interact with it
 
 If you take a look back at our contract's `deploy()` function, we set the initial value of the Flipper contract to `false`. Let's check that this is the case.
 
-In the **Call** section, set the _message to send_ to `get(): bool`. Send a _value_ of `1` with the _maximum gas allowed_ set to `50,000`.
+In the **Call** section, set the _message to send_ to `get(): bool`. Set the _maximum gas allowed_ to `500,000`.
 
 > **Note:** You should not need to send any _value_ when making a contract call, but there is a temporary bug in the UI requiring it, so we just put `1`.
 
@@ -27,7 +27,7 @@ While this is not a great long term solution, it works very well for debugging c
 
 So let's make the value turn `true` now!
 
-The alternative _message to send_ we can make with the UI is `flip()`. Again, we will send a _value_ of `1` and a _maximum gas allowed_ of `100,000`.
+The alternative _message to send_ we can make with the UI is `flip()`. Again, set the _maximum gas allowed_ to `500,000`.
 
 If the extrinsic was successful, we should then be able to go back to the `get()` function and see our updated storage:
 
