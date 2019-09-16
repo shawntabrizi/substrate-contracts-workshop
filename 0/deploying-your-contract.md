@@ -38,9 +38,9 @@ You will notice on the **Contracts** tab there is a new section called **Instanc
 
 The _code for this contract_ is automatically set to the last contract you published. You would be able to choose from a drop down of previous contracts if you created others in the past.
 
-To instantiate our contract we just need to give this contract account an _endowment_ of 1000000 and again set the _maximum gas allowed_ to `500,000` units.
+To instantiate our contract we just need to give this contract account an _endowment_ of `10,000,000` and again set the _maximum gas allowed_ to `500,000` units. 
 
-> **Note:** As mentioned earlier, contract creation involves creation of a new Account. As such, you must be sure to give the contract account at least the existential deposit defined by your blockchain. This is why we set the `endowment` to `1000000`.
+> **Note:** As mentioned earlier, contract creation involves creation of a new Account. As such, you must be sure to give the contract account at least the existential deposit defined by your blockchain. We also need to be able to pay the contract's rent (_`endowment`_). If we consume all of this deposit, the contract will become invalid. We can always refill the contract's balance and keep it on chain.
 
 When you press **Instantiate**, you should see a flurry of events appear including the creation of a new account (`balances.NewAccount`) and the instantiation of the contract (`contract.Instantiated`):
 
