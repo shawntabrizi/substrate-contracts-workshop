@@ -10,69 +10,21 @@ To get started, you need to make sure your computer is set up to build Substrate
 If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
 
 ```bash
+curl https://getsubstrate.io -sSf | bash -s -- --fast
+```
+
+## Installing Substrate
+
+You need to use a Substrate node with the built-in Contracts module.
+
+You can install the default Substrate template by running the next command.
+
+```bash
 curl https://getsubstrate.io -sSf | bash
 ```
 
 If you are using another operating system, like Windows, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
 
-## Wasm Build Environment
-
-Next you need to set up the Wasm build environment within Rust:
-
-```bash
-rustup update nightly
-```
-```bash
-rustup update stable
-```
-```bash
-rustup target add wasm32-unknown-unknown --toolchain nightly
-```
-```bash
-rustup target add wasm32-unknown-unknown --toolchain stable
-```
-
-## Wasm Utilities
-
-Smart contracts in Substrate are compiled to WebAssembly (Wasm). To manipulate these files for use on Substrate, you will need to install some Wasm utilities:
-
-* [Wabt](https://github.com/WebAssembly/wabt)
-* [Parity wasm-utils](https://github.com/paritytech/wasm-utils)
-
-Depending on your operating system, the installation instruction may be different:
-
-### Mac OS:
-
-```bash
-brew install wabt
-```
-```bash
-cargo install pwasm-utils-cli --bin wasm-prune --force
-```
-
-### Arch Linux:
-```bash
-sudo pacman -Syu wabt
-```
-```bash
-cargo install pwasm-utils-cli --bin wasm-prune --force
-```
-
-### Ubuntu/Debian:
-
-```bash
-sudo apt install -y curl jq tar
-```
-```bash
-curl https://raw.githubusercontent.com/paritytech/scripts/master/install-wasm-binaries.sh -sSf |bash -s
-```
-```bash
-cargo install pwasm-utils-cli --bin wasm-prune --force
-```
-
-We will be using `wasm2wat` (wabt), `wat2wasm` (wabt), and `wasm-prune` (wasm-utils) later in the guide.
-
-> **Note**: The Ubuntu/Debian script will install 2 external binaries (wasm2wat, wat2wasm) into the ~/.cargo/bin directory.
 
 ## ink! CLI
 

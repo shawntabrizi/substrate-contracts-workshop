@@ -16,21 +16,17 @@ flipper
 |
 +-- .cargo
 |   |
-|   +-- config      <-- Compiler Configuration
+|   +-- config            <-- Compiler Configuration
 +-- .ink
 |   |
 |   +-- abi_gen 
 |       |
-|       +-- Cargo.toml
-|       +-- main.rs
+|       +-- Cargo.toml   
+|       +-- main.rs       <-- ABI Generator
 |
 +-- src
 |   |
-|   +-- lib.rs      <-- Contract Source Code
-|
-+-- build.sh        <-- Wasm Build Script
-|
-+-- rust-toolchain
+|   +-- lib.rs            <-- Contract Source Code
 |
 +-- Cargo.toml
 |

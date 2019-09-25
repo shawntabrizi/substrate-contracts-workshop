@@ -1,44 +1,20 @@
 Building Your Contract
 ===
 
-The ink! CLI also generates a build script called `build.sh`:
-
-```bash
-#!/bin/bash
-set -e
-
-PROJNAME=flipper
-
-# cargo clean
-# rm Cargo.lock
-
-CARGO_INCREMENTAL=0 &&
-cargo build --release --features generate-api-description --target=wasm32-unknown-unknown --verbose
-wasm2wat -o target/$PROJNAME.wat target/wasm32-unknown-unknown/release/$PROJNAME.wasm
-cat target/$PROJNAME.wat | sed "s/(import \"env\" \"memory\" (memory (;0;) 2))/(import \"env\" \"memory\" (memory (;0;) 2 16))/" > target/$PROJNAME-fixed.wat
-wat2wasm -o target/$PROJNAME.wasm target/$PROJNAME-fixed.wat
-wasm-prune --exports call,deploy target/$PROJNAME.wasm target/$PROJNAME-pruned.wasm
-```
-
-This file will be used to compile your contract source code to WASM. You can see that it depends on the Wasm utilities we installed earlier.
-
 To compile the smart contract, we need to run it:
 
 ```bash
-./build.sh
+cargo contract build
 ```
 
 If all goes well, you should see a `target` folder being created with 5 relevant files corresponding to the steps in the script:
 
 ```
 target
-├── flipper-fixed.wat
-├── flipper-pruned.wasm
-├── flipper.wasm
-└── flipper.wat
+└── flipper.wasm
 ```
 
-The final, optimized `flipper-pruned.wasm` file is what we will actually deploy to our Substrate chain.
+The final, optimized `flipper.wasm` file is what we will actually deploy to our Substrate chain.
 
 ## Contract ABI
 By running the next command we'll generate the Application Binary Interface (ABI):
@@ -50,9 +26,6 @@ You should have a new JSON file (`old_abi.json`) in the same target directory. T
 
 ``` bash
 target
-├── flipper-fixed.wat
-├── flipper-pruned.wasm
-├── flipper.wasm
 ├── flipper.wat
 └── old_abi.json
 ```
@@ -98,13 +71,7 @@ In the next section we will configure the Polkadot UI.
 
 **Learn More**
 
-One line in the build script we should call out is:
-
-```bash
-cat target/$PROJNAME.wat | sed "s/(import \"env\" \"memory\" (memory (;0;) 2))/(import \"env\" \"memory\" (memory (;0;) 2 16))/" > target/$PROJNAME-fixed.wat &&
-```
-
-TL;DR, this line is adding a maximum size to the Wasm memory declaration, which by default is not included.
+After running all Rust and LLVM optimizations, we apply extra steps to create a more efficient WebAssembly [`wasm`] file.
 
 WebAssembly modules can use two parameters to specify how much memory it wants:
 
