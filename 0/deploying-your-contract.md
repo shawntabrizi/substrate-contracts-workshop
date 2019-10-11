@@ -20,7 +20,7 @@ With your Substrate development node running, you can go back to the [Polkadot U
 
 Open the specially designed **Contracts** section of the UI.
 
-In the **Code** section, select a _deployment account_ with some account balance like Alice. In _compiled contract WASM_, select the `flipper-pruned.wasm` file we generated. For the _contract ABI_, select the JSON file. Finally, set the _maximum gas allowed_ to `500,000` units.
+In the **Code** section, select a _deployment account_ with some account balance like Alice. In _compiled contract WASM_, select the `flipper.wasm` file we generated. For the _contract ABI_, select the JSON file. Finally, set the _maximum gas allowed_ to `500,000` units.
 
 ![Contracts code page for deploying Flipper](./assets/flipper-code-page.png)
 

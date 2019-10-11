@@ -7,23 +7,24 @@ To follow this tutorial, you will need to set up some stuff on your computer.
 
 To get started, you need to make sure your computer is set up to build Substrate.
 
-If you are using OSX or most popular Linux distros, you can do that with a simple one-liner:
+If you are using __OSX__ or most popular __Linux__ distros, you can do it by running:
 
 ```bash
 curl https://getsubstrate.io -sSf | bash -s -- --fast
 ```
 
+```
+rustup target add wasm32-unknown-unknown --toolchain stable
+```
+If you are using another operating system, like __Windows__`, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
+
 ## Installing Substrate
 
-You need to use a Substrate node with the built-in Contracts module.
-
-You can install the default Substrate template by running the next command.
+We need to use a Substrate node with the built-in Contracts module. For this workshop we'll use the default Substrate template.
 
 ```bash
 curl https://getsubstrate.io -sSf | bash
 ```
-
-If you are using another operating system, like Windows, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
 
 
 ## ink! CLI
