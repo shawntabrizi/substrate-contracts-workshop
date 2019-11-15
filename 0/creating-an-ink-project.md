@@ -11,6 +11,12 @@ cargo contract new flipper
 
 This command will create a new project folder named `flipper` which we will explore:
 
+```bash
+cd flipper/
+```
+
+**ink! Contract Project**
+
 ```
 flipper
 |
@@ -24,11 +30,9 @@ flipper
 |       +-- Cargo.toml   
 |       +-- main.rs       <-- ABI Generator
 |
-+-- src
-|   |
-|   +-- lib.rs            <-- Contract Source Code
++-- lib.rs                <-- Contract Source Code
 |
-+-- Cargo.toml
++-- Cargo.toml            <-- Rust Dependencies and ink! Configuration
 |
 +-- .gitignore
 ```
@@ -37,7 +41,7 @@ flipper
 
 The ink CLI automatically generates the source code for the "Flipper" contract, which is about the simplest "smart" contract you can build. You can take a sneak peak as to what will come by looking at the source code here:
 
-[Flipper Example Source Code](https://github.com/paritytech/ink/blob/master/examples/lang/flipper/src/lib.rs)
+[Flipper Example Source Code](https://github.com/paritytech/ink/blob/master/examples/lang2/flipper/src/lib.rs)
 
 The Flipper contract is nothing more than a `bool` which gets flipped from true to false through the `flip()` function. We won't go so deep into the details of this source code because we will be walking you through the steps to build a more advanced contract!
 
@@ -55,13 +59,11 @@ To which you should see a successful test completion:
 
 ```bash
 $ cargo +nightly test
-    Finished dev [unoptimized + debuginfo] target(s) in 0.20s
-     Running target/debug/deps/flipper-03a085eedcb655b9
+    running 2 tests
+    test flipper::tests::it_works ... ok
+    test flipper::tests::default_works ... ok
 
-running 1 test
-test tests::it_works ... ok
-
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+    test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
 Now that we are feeling confident things are working, we can actually compile this contract to Wasm.

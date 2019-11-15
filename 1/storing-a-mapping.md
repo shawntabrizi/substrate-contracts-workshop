@@ -10,6 +10,7 @@ In addition to `storage::Value`, ink! also supports a `storage::HashMap` which a
 Here is an example of a mapping from user to a number:
 
 ```rust
+#[ink(storage)]
 struct MyContract {
     // Store a mapping from AccountIds to a u32
     my_number_map: storage::HashMap<AccountId, u32>,
@@ -31,17 +32,22 @@ Here are some of the most common functions you might use:
     ///
     /// If the map did have this key present, the value is updated,
     /// and the old value is returned.
-    pub fn insert(&mut self, key: K, val: V) -> Option<V> {...}
+    pub fn insert(&mut self, key: K, val: V) -> Option<V> {/* --snip-- */}
 
     /// Removes a key from the map, returning the value at the key if the key
     /// was previously in the map.
-    pub fn remove<Q>(&mut self, key: &Q) -> Option<V> {...}
+    pub fn remove<Q>(&mut self, key: &Q) -> Option<V> {/* --snip-- */}
 
     /// Returns an immutable reference to the value corresponding to the key.
-    pub fn get<Q>(&self, key: &Q) -> Option<&V> {...}
+    pub fn get<Q>(&self, key: &Q) -> Option<&V> {/* --snip-- */}
 
     /// Returns a mutable reference to the value corresponding to the key.
-    pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V> {...}
+    pub fn get_mut<Q>(&mut self, key: &Q) -> Option<&mut V> {/* --snip-- */}
+
+    /// Mutates the value associated with the key if any.
+    /// Returns a reference to the mutated element
+    pub fn mutate_with<Q, F>(&mut self, key: &Q, f: F) -> Option<&V> {/* --snip-- */}
+    
 ```
 
 ## Initializing a HashMap
@@ -51,94 +57,102 @@ As mentioned a number of times throughout this tutorial, not initializing storag
 So given `my_number_map`, imagine we wanted the default value for any given key to be `0`. We can build a function like this:
 
 ```rust
-contract! {
+#![feature(proc_macro_hygiene)]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+use ink_core::storage;
+use ink_lang2 as ink;
+
+#[ink::contract(version = "0.1.0")]
+impl MyContract {
+    
+    #[ink(storage)]
     struct MyContract {
         // Store a mapping from AccountIds to a u32
         my_number_map: storage::HashMap<AccountId, u32>,
     }
 
-    impl Deploy for MyContract {
-        fn deploy(&mut self) {
-        }
-    }
-
-    impl MyContract {
-        /// Returns the number for an AccountId or 0 if it is not set.
-        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
-            let balance = self.my_number_map.get(of).unwrap_or(&0);
-            *balance
-        }
+    /// Private function.
+    /// Returns the number for an AccountId or 0 if it is not set.
+    fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+        let balance = self.my_number_map.get(of).unwrap_or(&0);
+        *balance
     }
 }
 ```
 
-Here we see that after we `get` the value from `my_number_map` we call `unwrap_or` which will either `unwrap` the value stored in storage, _or_ if there is no value, return some known value. Then, when building functions that interact with this HashMap, you need to always remember to call this function rather than getting the value directly.
+Here we see that after we `get` the value from `my_number_map` we call `unwrap_or` which will either `unwrap` the value stored in storage, _or_ if there is no value, return some known value. Then, when building functions that interact with this HashMap, you need to always remember to call this function rather than getting the value directly from storage.
 
 Here is an example:
 
 ```rust
-contract! {
-    #![env = DefaultSrmlTypes]
+#![feature(proc_macro_hygiene)]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+use ink_core::storage;
+use ink_lang2 as ink;
+
+#[ink::contract(version = "0.1.0")]
+impl MyContract {
     
+    #[ink(storage)]
     struct MyContract {
         // Store a mapping from AccountIds to a u32
         my_number_map: storage::HashMap<AccountId, u32>,
     }
 
-    impl Deploy for MyContract {
-        fn deploy(&mut self) {
-        }
+    // Get the value for a given AccountId
+    #[ink(message)]
+    fn get(&self, of: AccountId) -> u32 {
+        let value = self.my_number_or_zero(&of);
+        value
     }
 
-    impl MyContract {
-        // Get the value for a given AccountId
-        pub(external) fn get(&self, of: AccountId) -> u32 {
-            let value = self.my_number_or_zero(&of);
-            env.println(&format!("{:?} as a value of {:?}", of, value));
-            value
-        }
-
-        // Get the value for the calling AccountId
-        pub(external) fn get_my_number(&self) -> u32 {
-            let caller = env.caller();
-            let value = self.my_number_or_zero(&caller);
-            env.println(&format!("Your value is {:?}", value));
-            value
-        }
+    // Get the value for the calling AccountId
+    #[ink(message)]
+    fn get_my_number(&self) -> u32 {
+        let caller = env.caller();
+        let value = self.my_number_or_zero(&caller);
+        value
     }
 
-    impl MyContract {
-        /// Returns the number for an AccountId or 0 if it is not set.
-        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
-            let value = self.my_number_map.get(of).unwrap_or(&0);
-            *value
-        }
+    // Returns the number for an AccountId or 0 if it is not set.
+    fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+        let value = self.my_number_map.get(of).unwrap_or(&0);
+        *value
     }
 }
 ```
 
 ## Contract Caller
 
-As you might have noticed in the example above, we use a special function called `env.caller()`. This function is available throughout the contract logic and will always return to you the contract caller.
+As you might have noticed in the example above, we use a special function called `self.env().caller()`. This function is available throughout the contract logic and will always return to you the contract caller.
 
-> **NOTE:** The contract caller is not the same as the origin caller. If a user triggers a contract which then calls a subsequent contract, the `env.caller()` in the second contract will be the address of the first contract, not the original user. Today, we cannot make contract to contract calls, but this will be added in the future, and we may elaborate on these details at that time.
+> **NOTE:** The contract caller is not the same as the origin caller. If a user triggers a contract which then calls a subsequent contract, the `self.env().caller()` in the second contract will be the address of the first contract, not the original user.
 
-`env.caller()` can be used a number of different ways. In the examples above, we are basically creating an "access control" layer which allows a user to modify their own value, but no one else can. You can also do things like define a contract owner during contract deployment:
+`self.env().caller()` can be used a number of different ways. In the examples above, we are basically creating an "access control" layer which allows a user to modify their own value, but no one else. You can also do things like define a contract owner during contract deployment:
 
 ```rust
-contract! {
+#![feature(proc_macro_hygiene)]
+#![cfg_attr(not(feature = "std"), no_std)]
+
+use ink_core::storage;
+use ink_lang2 as ink;
+
+#[ink::contract(version = "0.1.0")]
+impl MyContract {
+    
+    #[ink(storage)]
     struct MyContract {
         // Store a contract owner
         owner: storage::Value<AccountId>,
     }
 
-    impl Deploy for MyContract {
-        /// Allows the user to initialize `owner` with the contract caller
-        fn deploy(&mut self) {
-            self.owner.set(env.caller());
-        }
+    #[ink(constructor)]
+    fn new(&mut self, init_value: i32) {
+        self.owner.set(self.env().caller());
     }
-    ...
+    /* --snip-- */
 }
 ```
 
@@ -147,8 +161,6 @@ Then you can write permissioned functions which checks that the current caller i
 ## Your Turn!
 
 Follow the `ACTION`s in the template code to introduce a storage map to your contract.
-
-TODO: Make this better.
 
 Remember to run `cargo +nightly test` to test your work.
 

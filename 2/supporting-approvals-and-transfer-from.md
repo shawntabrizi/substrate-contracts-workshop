@@ -15,7 +15,7 @@ Well, rather than giving your tokens directly to the contract (an escrow), you c
 
 So hopefully you can see why a feature like this would be useful, but how can we do it safely?
 
-We use a two step process: Approve and Transfer From.
+We use a two step process: **Approve** and **Transfer From**.
 
 ### Approve
 
@@ -23,7 +23,7 @@ Approving another account to spend your funds is the first step in the third par
 
 When an account calls `approve` multiple times, the approved value simply overwrites any existing value that was approved in the past. By default, the approved value between any two accounts is `0`, and a user can always call approve for `0` to revoke access to their funds from another account.
 
-To store approvals in our contract, we need to use a slightly fancy HashMap.
+To store approvals in our contract, we need to use a slightly fancy `HashMap`.
 
 Since each account can have a different amount approved for any other account to use, we need to use a tuple as our key which simply points to a balance value. Here is an example of what that would look like:
 
@@ -34,43 +34,46 @@ struct Erc20 {
 }
 ```
 
-Here we have defined the tuple to represent `(owner, spender)` such that we can look up how much a "spender" can spend from an "owner's" balance using they `AccountId`s in this tuple. Remember that we will need to again create an `allowance_or_zero` function to help us get the allowance of an account when it is not initialized, and a getter function called `allowance` to look up the current value for any pair of accounts.
+Here we have defined the tuple to represent `(owner, spender)` such that we can look up how much a "spender" can spend from an "owner's" balance using the `AccountId`s in this tuple. Remember that we will need to again create an `allowance_of_or_zero` function to help us get the allowance of an account when it is not initialized, and a getter function called `allowance` to look up the current value for any pair of accounts.
 
 ```rust
 /// Approve the passed AccountId to spend the specified amount of tokens
 /// on the behalf of the message's sender.
-pub(external) fn approve(&mut self, spender: AccountId, value: Balance) -> bool {...}
+#[ink(message)] 
+fn approve(&mut self, spender: AccountId, value: Balance) -> bool {/* --snip-- */}
 ```
 
-When you call the `approve` function, you simply insert the `value` specified into storage. The `owner` is always the `env.caller()`, ensuring that the function call is always authorized.
+When you call the `approve` function, you simply insert the `value` specified into storage. The `owner` is always the `self.env().caller()`, ensuring that the function call is always authorized.
 
 ### Transfer From
 
 Finally, once we have set up an approval for one account to spend on-behalf-of another, we need to create a special `transfer_from` function which enables an approved user to transfer those funds.
 
-As mentioned earlier, we will take advantage of the `transfer_impl` to do the bulk of our transfer logic. All we need to introduce is the _authorization_ logic again.
+As mentioned earlier, we will take advantage of the private `transfer_from_to` function to do the bulk of our transfer logic. All we need to introduce is the _authorization_ logic again.
 
 So what does it mean to be authorized to call this function?
 
-1. The `env.caller()` must have some allowance to spend funds from the `from` account.
+1. The `self.env().caller()` must have some allowance to spend funds from the `from` account.
 2. The allowance must not be less than the value trying to be transferred.
 
 In code, that can easily be represented like so:
 
 ```rust
-let allowance = self.allowance_or_zero(&from, &env.caller());
+let allowance = self.allowance_of_or_zero(&from, &self.env().caller());
 if allowance < value {
     return false
 }
+/* --snip-- */
+true
 ```
 
 Again, we exit early and return false if our authorization does not pass.
 
-If everything looks good though, we simply `insert` the updated allowance into the `allowance` HashMap (`let new_allowance = allowance - value`), and call the `transfer_impl` between the specified `from` and `to` accounts.
+If everything looks good though, we simply `insert` the updated allowance into the `allowance` HashMap (`let new_allowance = allowance - value`), and call the `transfer_from_to` between the specified `from` and `to` accounts.
 
 ## Be Careful!
 
-If you glaze over the logic of this function too quickly, you may introduce a bug into your smart contract. Remember when calling `transfer_from`, the `env.caller()` and the `from` account is used to look up the current allowance, but the `transfer_from` function is called between the `from` and `to` account specified.
+If you glaze over the logic of this function too quickly, you may introduce a bug into your smart contract. Remember when calling `transfer_from`, the `self.env().caller()` and the `from` account is used to look up the current allowance, but the `transfer_from` function is called between the `from` and `to` account specified.
 
 There are three account variables in play whenever `transfer_from` is called, and you need to make sure to use them correctly! Hopefully our test will catch any mistake you make.
 

@@ -9,7 +9,6 @@
     - [Running a Substrate Node](0/running-a-substrate-node.md)
     - [Deploying Your Contract](0/deploying-your-contract.md)
     - [Calling Your Contract](0/calling-your-contract.md)
-    - [Rust Primer](0/rust-primer.md)
 
 - [**#1 Basics**](1/introduction.md)
 
@@ -29,6 +28,6 @@
     - [Supporting Approvals and Transfer From](2/supporting-approvals-and-transfer-from.md)
     - [Testing our Contract](2/testing-our-contract.md)
 
-- [Wiki](https://github.com/paritytech/ink/wiki)
-- [Report an Issue](https://github.com/substrate-developer-hub/substrate-contracts-workshop/issues)
+- [Docs](https://substrate.dev)
+- [Report an Issue](https://github.com/substrate-developer-hub/ink-tutorial-1/issues)
 - [r/substrate](https://www.reddit.com/r/substrate)

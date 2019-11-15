@@ -16,11 +16,11 @@ curl https://getsubstrate.io -sSf | bash -s -- --fast
 ```
 rustup target add wasm32-unknown-unknown --toolchain stable
 ```
-If you are using another operating system, like __Windows__`, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
+If you are using another operating system, like __Windows__, follow the [installation instructions](https://substrate.dev/docs/en/getting-started/installing-substrate#windows) on the Substrate Developer Hub.
 
 ## Installing Substrate
 
-We need to use a Substrate node with the built-in Contracts module. For this workshop we'll use the default Substrate template.
+We need to use a Substrate node with the built-in Contracts module. For this workshop we'll use the pre-designed Substrate Node.
 
 ```bash
 curl https://getsubstrate.io -sSf | bash
@@ -38,5 +38,5 @@ cargo install --force --git https://github.com/paritytech/ink cargo-contract
 ```
 
 You can then use `cargo contract --help` to start exploring the commands made available to you.  
-> **Note**: The ink! CLI is under heavy development and most of its commands are not implemented, yet!
+> **Note:** The ink! CLI is under heavy development and some of its commands are not implemented, yet!
 

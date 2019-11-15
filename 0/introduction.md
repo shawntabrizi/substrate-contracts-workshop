@@ -5,8 +5,8 @@ This chapter will teach you everything you need to know to get started building 
 
 We will cover:
 
-- Installing prerequisites on your computer
-- Using the ink! CLI to start a new project
-- Building and testing our contract
-- Deploying our contract on a local Substrate node
-- Interacting with our contract using the Polkadot UI
+1. Installing prerequisites on your computer
+2. Using the ink! `cargo-contract` plugin to start a new project
+3. Building and testing our contract
+4. Deploying our contract on a local Substrate node
+5. Interacting with our contract using the Polkadot UI

@@ -1,38 +1,43 @@
 Storing a Value
 ===
 
-The entire ink! smart contract is built off of a `struct` which defines your contract storage.
+The first thing we are going to do to the contract template is introduce some storage values.
 
 Here is how you would store some simple values in storage:
 
 ```rust
-contract! {
-    struct MyContract {
-        // Store a bool
-        my_bool: storage::Value<bool>,
-        // Store some number
-        my_number: storage::Value<u32>,
-    }
-    ...
+#[ink(storage)]
+struct MyContract {
+    // Store a bool
+    my_bool: storage::Value<bool>,
+    // Store some number
+    my_number: storage::Value<u32>,
 }
+/* --snip-- */
 ```
 
 ## Supported Types
 
-Contract storage like `storage::Value<T>` is allowed to be generic over types that are encodable and decodable with [Parity Codec](https://github.com/paritytech/parity-codec) which includes the most common types such as `bool`, `u{16,32,64,128}`, `i{8,16,32,64,128}`, `String`, tuples, and arrays.  Note that `u8` is [not currently supported](https://github.com/paritytech/parity-codec/issues/47) in `parity_codec`.
+Contract storage like `storage::Value<T>` is allowed to be generic over types that are encodable and decodable with [Parity Codec](https://github.com/paritytech/parity-codec) which includes the most common types such as `bool`, `u{8,16,32,64,128}`, `i{8,16,32,64,128}`, `String`, tuples, and arrays.
 
-ink! also supports Substrate specific types like `AccountId`, `Balance`, and `Hash`. To use some of these non-primitive types, we have to import them from `ink_core::env::DefaultSrmlTypes`. We also have to include `#![env = DefaultSrmlTypes]` to the beginning of our `contract!` macro.
+ink! provides smart contracts Substrate specific types like `AccountId`, `Balance`, and `Hash` as if they were primitive types. Also ink! provides storage types for more elaborate storage interactions through the storage module:
+
+```rust
+use ink_core::storage::{Value, Vec, HashMap, BTreeMap, Heap, Stash, Bitvec};
+```
 
 Here is an example of how you would store an `AccountId` and `Balance`:
 
 ```rust
 // We are importing the default SRML types
-use ink_core::env::DefaultSrmlTypes;
+use ink_core::storage;
+use ink_lang2 as ink;
 
-contract! {
-    #![env = DefaultSrmlTypes]
+#[ink::contract(version = "0.1.0")]
+impl MyContract {
 
     // Our struct will use those default SRML types
+    #[ink(storage)]
     struct MyContract {
         // Store some AccountId
         my_account: storage::Value<AccountId>,
@@ -43,7 +48,7 @@ contract! {
 }
 ```
 
-You can find all the supported Substrate types in the [`core/env/traits.rs` file](https://github.com/paritytech/ink/blob/master/core/src/env/traits.rs).
+You can find all the supported Substrate types in [`core/env/traits.rs`](https://github.com/paritytech/ink/blob/master/core/src/env/traits.rs).
 
 ## Initializing Storage
 
@@ -60,63 +65,41 @@ self.my_account.set(AccountId::from([0x0; 32]));
 self.my_balance.set(1337);
 ```
 
-This can be done anywhere in our contract logic, but most commonly this happens in the `Deploy` section.
+This can be done anywhere in our contract logic, but most commonly this happens by using the `#[ink(constructor)]` attribute.
 
 ## Contract Deployment
 
-Every ink! smart contract must implement the `Deploy` trait which consists of a single function, `deploy`, which is run once when a contract is created.
+Every ink! smart contract must have a constructor which is run once when a contract is created. ink! smart contracts can have multiple different constructors:
 
 ```rust
-contract! {
-    #![env = DefaultSrmlTypes]
+use ink_core::storage;
+use ink_lang2 as ink;
 
+#[ink::contract(version = "0.1.0")]
+impl MyContract {
+    #[ink(storage)]
     struct MyContract {
-        ...
+        number: storage::Value<u32>,
     }
 
-    impl Deploy for MyContract {
-        fn deploy(&mut self) {
-            // Deployment logic that runs once upon contract creation
+    impl MyContract {
+        #[ink(constructor)]
+        fn new(&mut self, init_value: u32) {
+            self.number.set(init_value);
         }
+
+        #[ink(constructor)]
+        fn default(&mut self) {
+            self.new(0)
+        }
+    /* --snip-- */
     }
 }
 ```
-
-> **Note:** If you are familiar with Solidity, this is similar to the `constructor` function, however in ink!, `deploy` is not optional.
-
-### Deployment Variables
-
-You can deploy a contract with some configurable parameters so that users can customize the contract they are instantiating. You can deploy a contract using one or more parameters like so:
-
-```rust
-contract! {
-    #![env = DefaultSrmlTypes]
-
-    struct MyContract {
-        // Store a number
-        my_number: storage::Value<u32>,
-        // Store some Balance
-        my_balance: storage::Value<Balance>,
-    }
-
-    impl Deploy for MyContract {
-        /// Allows the user to initialize `my_number` with an input value
-        fn deploy(&mut self, init_value: u32, init_balance: Balance) {
-            self.my_number.set(init_value);
-            self.my_balance.set(init_balance);
-        }
-    }
-    ...
-}
-```
-
-> **Note:** Parameter types of `deploy` and other contract messages are very restricted. We currently only allow users to pass primitives such as `bool`, `u{8,16,32,64,128}`, `i{8,16,32,64,128}` as well as SRML primitives such as `AccountId` and `Balance`.
 
 ## Your Turn!
 
 Follow the `ACTION`s in the template.
-
-TODO: Add more content.
 
 Remember to run `cargo +nightly test` to test your work.
 

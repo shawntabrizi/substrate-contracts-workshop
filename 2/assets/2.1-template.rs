@@ -1,15 +1,12 @@
-#![cfg_attr(not(any(test, feature = "test-env")), no_std)]
+#![feature(proc_macro_hygiene)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_core::{
-    env::DefaultSrmlTypes,
-    memory::format,
-    storage,
-};
-use ink_lang::contract;
+use ink_core::storage;
+use ink_lang2 as ink;
 
-contract! {
-    #![env = DefaultSrmlTypes]
-
+#[ink::contract(version = "0.1.0")]
+mod erc20 {
+    #[ink(storage)]
     struct Erc20 {
         /// The total supply.
         total_supply: storage::Value<Balance>,
@@ -17,53 +14,46 @@ contract! {
         balances: storage::HashMap<AccountId, Balance>,
     }
 
-    impl Deploy for Erc20 {
-        fn deploy(&mut self, init_value: Balance) {
-            // ACTION: `set` the total supply to `init_value`
-            // ACTION: `insert` the `init_value` as the `env.caller()` balance
-        }
-    }
-
     impl Erc20 {
-        /// Returns the total number of tokens in existence.
-        pub(external) fn total_supply(&self) -> Balance {
-            // ACTION: Print the total supply to the node's output
+        #[ink(constructor)]
+        fn new(&mut self, initial_supply: Balance) {
+            // ACTION: `set` the total supply to `init_value`
+            // ACTION: `insert` the `init_value` as the `caller` balance
+        }
+
+        #[ink(message)]
+        fn total_supply(&self) -> Balance {
             // ACTION: Return the total supply
         }
 
-        /// Returns the balance of the given AccountId.
-        pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
-            // ACTION: Print the balance of `owner`
+        #[ink(message)]
+        fn balance_of(&self, owner: AccountId) -> Balance {
             // ACTION: Return the balance of `owner`
             //   HINT: Use `balance_of_or_zero` to get the `owner` balance
         }
-    }
 
-    impl Erc20 {
-        /// Returns the balance of the AccountId or 0 if there is no balance.
-        fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
-            // ACTION: `get` the balance of `of`, then `unwrap_or` fallback to 0
+        fn balance_of_or_zero(&self, owner: &AccountId) -> Balance {
+            // ACTION: `get` the balance of `owner`, then `unwrap_or` fallback to 0
             // ACTION: Return the balance
         }
     }
-}
 
-#[cfg(all(test, feature = "test-env"))]
-mod tests {
-    use super::*;
-    use ink_core::env;
-    type Types = ink_core::env::DefaultSrmlTypes;
+    #[cfg(test)]
+    mod tests {
+        use super::*;
 
-    #[test]
-    fn deployment_works() {
-        let alice = AccountId::from([0x0; 32]);
-        env::test::set_caller::<Types>(alice);
+        #[test]
+        fn new_works() {
+            let contract = Erc20::new(777);
+            assert_eq!(contract.total_supply(), 777);
+        }
 
-        // Deploy the contract with some `init_value`
-        let erc20 = Erc20::deploy_mock(1234);
-        // Check that the `total_supply` is `init_value`
-        assert_eq!(erc20.total_supply(), 1234);
-        // Check that `balance_of` Alice is `init_value`
-        assert_eq!(erc20.balance_of(alice), 1234);
+        #[test]
+        fn balance_works() {
+            let contract = Erc20::new(100);
+            assert_eq!(contract.total_supply(), 100);
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 100);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 0);
+        }
     }
 }

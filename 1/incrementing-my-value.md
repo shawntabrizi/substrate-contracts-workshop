@@ -11,23 +11,24 @@ But have no fear, we can continue to use the `my_number_or_zero` function we cre
 
 ```rust
 impl MyContract {
-    ...
+
+    /* --snip-- */
 
     // Set the value for the calling AccountId
-    pub(external) fn set_my_number(&mut self, value: u32) {
-        let caller = env.caller();
+    #[ink(message)]
+    fn set_my_number(&mut self, value: u32) {
+        let caller = self.env().caller();
         self.my_number_map.insert(caller, value);
     }
 
     // Add a value to the existing value for the calling AccountId
-    pub(external) fn add_my_number(&mut self, value: u32) {
-        let caller = env.caller();
+    #[ink(message)]
+    fn add_my_number(&mut self, value: u32) {
+        let caller = self.env().caller();
         let my_number = self.my_number_or_zero(&caller);
         self.my_number_map.insert(caller, my_number + value);
     }
-}
 
-impl MyContract {
     /// Returns the number for an AccountId or 0 if it is not set.
     fn my_number_or_zero(&self, of: &AccountId) -> u32 {
         let value = self.my_number_map.get(of).unwrap_or(&0);
@@ -40,7 +41,22 @@ Here we have written two kinds of functions which modify a HashMap. One which si
 
 ## Feel the Pain (Optional)
 
-TODO: Add content which walks a user through reading/modifying uninitialized storage.
+We will not always have an existing value on our contract's storage. We can take advantage of the Rust `Option<T>` type to help use on this task.
+If there's no value on the contract storage we will insert a new one; On the contrary if there is an existing value we will only update it.
+
+ink! HashMaps getters return an `Option<T>` that we can use to identify if there is an existing value on our storage.
+
+```rust
+let caller = self.env().caller();
+match self.my_number_map.get(&caller) {
+    Some(_) => {
+        self.my_number_map.mutate_with(&caller, |value| *value += by);
+    }
+    None => {
+        self.my_number_map.insert(caller, by);
+    }
+};
+```
 
 ## Your Turn!
 

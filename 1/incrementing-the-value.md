@@ -11,12 +11,13 @@ If you are simply _reading_ from the contract storage, you only need to pass `&s
 
 ```rust
 impl MyContract {
-    pub(external) fn my_getter(&self) -> u32 {
-        env.println(&format!("my_number is {:?}", *self.my_number));
+    #[ink(message)]
+    fn my_getter(&self) -> u32 {
         *self.my_number
     } 
 
-    pub(external) fn my_setter(&mut self, new_value: u32) {
+    #[ink(message)]
+    fn my_setter(&mut self, new_value: u32) {
         self.my_number.set(new_value);
     }
 }
@@ -24,29 +25,29 @@ impl MyContract {
 
 ## Modifying a Storage Value
 
-You can always update the value of a storage item by called `set` again as we showed above.
+You can always update the value of a storage item by calling `set` again.
 
 However, if you know the value is already set, then you can modify the value in a more ergonomic way:
 
 ```rust
 impl MyContract {
-    pub(external) fn my_setter(&mut self, new_value: u32) {
-        self.my_number = new_value;
+    #[ink(message)]
+    fn my_setter(&mut self, new_value: u32) {
+        self.my_number.set(new_value);
     }
 
-    pub(external) fn my_adder(&mut self, add_value: u32) {
+    #[ink(message)]
+    fn my_adder(&mut self, add_value: u32) {
         self.my_number += add_value;
     }
 }
 ```
 
-However, if the value is not initialized, your contract will compile fine, but will panic during contract execution! We really cannot understate how easy it is to make mistakes this way.
+However, if the value is not initialized, your contract will compile fine, but will panic during contract execution! **We really cannot understate how easy it is to make mistakes this way.**
 
 ## Your Turn
 
 Follow the `ACTION`s in the template code.
-
-TODO: Make this better.
 
 Remember to run `cargo +nightly test` to test your work.
 

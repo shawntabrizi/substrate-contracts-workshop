@@ -218,9 +218,13 @@ section.cover .cover-main > p:last-child a:last-child {
 .markdown-section h2,
 .markdown-section h3,
 .markdown-section h4,
-.markdown-section strong,
 .markdown-section blockquote {
     color: #989898;
+}
+
+.markdown-section strong,
+.markdown-section em {
+    color: #ffffff;
 }
 
 .markdown-section a {

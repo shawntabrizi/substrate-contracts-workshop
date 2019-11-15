@@ -7,13 +7,7 @@ Let's take a look at a high level what is available to you when developing a sma
 
 ink! is an [eDSL](https://wiki.haskell.org/Embedded_domain_specific_language) to write WebAssembly based smart contracts in the Rust programming language.
 
-ink! exists at 3 different layers:
-
-* Core: The core utilities used to write smart contracts.
-* Model: Medium-level abstractions to write smart contracts heavily inspired by [Fleetwood](https://github.com/paritytech/fleetwood).
-* Language (Lang): The actual eDSL based on ink! Core and ink! Model to provide a user friendly interface to writing smart contract code.
-
-The Language layer of ink! relies on a single, heavy macro called `contract!`. At compile time, this macro expands to generate code at the Model and Core level. For the purposes of this guide, we will be focusing on the Language layer of ink! where we expect most contract development to take place. Take a quick look over the ink! contract template provided here.
+ink! is just standard Rust in a well defined "contract format" with specialized `#[ink(...)]` attribute macros. These attribute macros tell ink! what the different parts of your Rust smart contract represent, and ultimately allows ink! to do all the magic needed to create Substrate compatible Wasm bytecodes!
 
 ## Your Turn!
 
@@ -27,7 +21,11 @@ cargo contract new incrementer
 
 Just like before, this will create a new project folder named `incrementer` which we will use for the rest of this chapter.
 
-In the `src/lib.rs` file, replace the "Flipper" contract source code with the template code provided here.
+```bash
+cd incrementer/
+```
+
+In the `lib.rs` file, replace the "Flipper" contract source code with the template code provided here.
 
 Quickly check that it compiles and the trivial test passes with:
 
@@ -35,7 +33,11 @@ Quickly check that it compiles and the trivial test passes with:
 cargo +nightly test
 ```
 
-Also check that you can build the Wasm file by running `cargo contract build`.
+Also check that you can build the Wasm file by running:
+
+```bash
+cargo contract build
+```
 
 If everything looks good, then we are ready to start programming!
 
