@@ -64,7 +64,7 @@ use ink_core::storage;
 use ink_lang2 as ink;
 
 #[ink::contract(version = "0.1.0")]
-impl MyContract {
+mod mycontract {
     
     #[ink(storage)]
     struct MyContract {
@@ -72,11 +72,13 @@ impl MyContract {
         my_number_map: storage::HashMap<AccountId, u32>,
     }
 
-    /// Private function.
-    /// Returns the number for an AccountId or 0 if it is not set.
-    fn my_number_or_zero(&self, of: &AccountId) -> u32 {
-        let balance = self.my_number_map.get(of).unwrap_or(&0);
-        *balance
+    impl MyContract {
+        /// Private function.
+        /// Returns the number for an AccountId or 0 if it is not set.
+        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+            let balance = self.my_number_map.get(of).unwrap_or(&0);
+            *balance
+        }
     }
 }
 ```
@@ -93,7 +95,7 @@ use ink_core::storage;
 use ink_lang2 as ink;
 
 #[ink::contract(version = "0.1.0")]
-impl MyContract {
+mod mycontract {
     
     #[ink(storage)]
     struct MyContract {
@@ -101,25 +103,27 @@ impl MyContract {
         my_number_map: storage::HashMap<AccountId, u32>,
     }
 
-    // Get the value for a given AccountId
-    #[ink(message)]
-    fn get(&self, of: AccountId) -> u32 {
-        let value = self.my_number_or_zero(&of);
-        value
-    }
+    impl MyContract {
+        // Get the value for a given AccountId
+        #[ink(message)]
+        fn get(&self, of: AccountId) -> u32 {
+            let value = self.my_number_or_zero(&of);
+            value
+        }
 
-    // Get the value for the calling AccountId
-    #[ink(message)]
-    fn get_my_number(&self) -> u32 {
-        let caller = env.caller();
-        let value = self.my_number_or_zero(&caller);
-        value
-    }
+        // Get the value for the calling AccountId
+        #[ink(message)]
+        fn get_my_number(&self) -> u32 {
+            let caller = env.caller();
+            let value = self.my_number_or_zero(&caller);
+            value
+        }
 
-    // Returns the number for an AccountId or 0 if it is not set.
-    fn my_number_or_zero(&self, of: &AccountId) -> u32 {
-        let value = self.my_number_map.get(of).unwrap_or(&0);
-        *value
+        // Returns the number for an AccountId or 0 if it is not set.
+        fn my_number_or_zero(&self, of: &AccountId) -> u32 {
+            let value = self.my_number_map.get(of).unwrap_or(&0);
+            *value
+        }
     }
 }
 ```
@@ -140,7 +144,7 @@ use ink_core::storage;
 use ink_lang2 as ink;
 
 #[ink::contract(version = "0.1.0")]
-impl MyContract {
+mod mycontract {
     
     #[ink(storage)]
     struct MyContract {
@@ -148,11 +152,13 @@ impl MyContract {
         owner: storage::Value<AccountId>,
     }
 
-    #[ink(constructor)]
-    fn new(&mut self, init_value: i32) {
-        self.owner.set(self.env().caller());
+    impl MyContract {
+        #[ink(constructor)]
+        fn new(&mut self, init_value: i32) {
+            self.owner.set(self.env().caller());
+        }
+        /* --snip-- */
     }
-    /* --snip-- */
 }
 ```
 
