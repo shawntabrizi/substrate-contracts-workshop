@@ -50,7 +50,6 @@ mod erc20 {
         fn balance_of_or_zero(&self, owner: &AccountId) -> Balance {
             *self.balances.get(owner).unwrap_or(&0)
         }
-
     }
 
     #[cfg(test)]

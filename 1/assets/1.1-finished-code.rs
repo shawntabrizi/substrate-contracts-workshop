@@ -21,7 +21,6 @@ mod incrementer {
         fn get(&self) {
             // Contract Message
         }
-
     }
 
     #[cfg(test)]
@@ -29,7 +28,7 @@ mod incrementer {
         use super::*;
 
         #[test]
-        fn it_works() {
+        fn default_works() {
             // Test Your Contract
         }
     }

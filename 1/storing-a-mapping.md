@@ -180,4 +180,8 @@ Remember to run `cargo +nightly test` to test your work.
 
 [embedded-code-final](./assets/1.5-finished-code.rs ':include :type=code embed-final')
 
+#### ** Previous Solution **
+
+[embedded-code-previous](./assets/1.4-finished-code.rs ':include :type=code embed-previous')
+
 <!-- tabs:end -->

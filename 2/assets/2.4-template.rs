@@ -13,7 +13,8 @@ mod erc20 {
         /// The balance of each user.
         balances: storage::HashMap<AccountId, Balance>,
         /// Approval spender on behalf of the message's sender.
-        allowances: storage::HashMap<(AccountId, AccountId), Balance>,
+        // ACTION: Add an `allowances` storage item. It should be a
+        //         `HashMap` from `(AccountId, AccountId)` to `Balance`
     }
 
     #[ink(event)]
@@ -26,15 +27,11 @@ mod erc20 {
         value: Balance,
     }
 
-    #[ink(event)]
-    struct Approval {
-        #[ink(topic)]
-        owner: AccountId,
-        #[ink(topic)]
-        spender: AccountId,
-        #[ink(topic)]
-        value: Balance,
-    }
+    // ACTION: Add an `Approval` event
+    //         It should emit the following:
+    //         * `owner` as an `AccountId`
+    //         * `spender` as an `AccountId`
+    //         * `value` as a `Balance`
 
     impl Erc20 {
         #[ink(constructor)]
@@ -111,7 +108,7 @@ mod erc20 {
         }
 
         fn allowance_of_or_zero(&self, owner: &AccountId, spender: &AccountId) -> Balance {
-            *self.allowances.get(&(*owner, *spender)).unwrap_or(&0)
+            // ACTION: `get` the `allowances` of `(owner, spender)` and `unwrap_or` return `0`.
         }
     }
 
