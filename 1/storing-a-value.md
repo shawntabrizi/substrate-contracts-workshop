@@ -29,14 +29,14 @@ use ink_core::storage::{Value, Vec, HashMap, BTreeMap, Heap, Stash, Bitvec};
 Here is an example of how you would store an `AccountId` and `Balance`:
 
 ```rust
-// We are importing the default SRML types
+// We are importing the default PALETTE types
 use ink_core::storage;
 use ink_lang2 as ink;
 
 #[ink::contract(version = "0.1.0")]
 impl MyContract {
 
-    // Our struct will use those default SRML types
+    // Our struct will use those default PALETTE types
     #[ink(storage)]
     struct MyContract {
         // Store some AccountId
