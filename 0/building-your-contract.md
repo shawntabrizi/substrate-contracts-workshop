@@ -19,15 +19,15 @@ target
 By running the next command we'll generate the contract metadata (a.k.a. the contract ABI):
 
 ``` bash
-cargo contract generate-abi
+cargo contract generate-metadata
 ```
 
-You should have a new JSON file (`abi.json`) in the same target directory: 
+You should have a new JSON file (`metadata.json`) in the same target directory: 
 
 ``` bash
 target
 ├── flipper.wasm
-└── abi.json
+└── metadata.json
 ```
 
 Let's take a look at the structure inside:
