@@ -34,7 +34,7 @@ The final tool we will be installing is the ink! command line utility which will
 You can install the utility using Cargo with:
 
 ```bash
-cargo install --force --git https://github.com/paritytech/ink cargo-contract
+cargo install --force --git https://github.com/paritytech/cargo-contract
 ```
 
 You can then use `cargo contract --help` to start exploring the commands made available to you.  
