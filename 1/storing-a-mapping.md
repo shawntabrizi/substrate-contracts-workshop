@@ -60,11 +60,11 @@ So given `my_number_map`, imagine we wanted the default value for any given key 
 #![feature(proc_macro_hygiene)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_core::storage;
-use ink_lang2 as ink;
+use ink_lang as ink;
 
 #[ink::contract(version = "0.1.0")]
 mod mycontract {
+    use ink_core::storage;
     
     #[ink(storage)]
     struct MyContract {
@@ -91,11 +91,12 @@ Here is an example:
 #![feature(proc_macro_hygiene)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_core::storage;
-use ink_lang2 as ink;
+use ink_lang as ink;
 
 #[ink::contract(version = "0.1.0")]
 mod mycontract {
+    use ink_core::storage;
+
     
     #[ink(storage)]
     struct MyContract {
@@ -140,11 +141,12 @@ As you might have noticed in the example above, we use a special function called
 #![feature(proc_macro_hygiene)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_core::storage;
-use ink_lang2 as ink;
+use ink_lang as ink;
 
 #[ink::contract(version = "0.1.0")]
 mod mycontract {
+    use ink_core::storage;
+
     
     #[ink(storage)]
     struct MyContract {

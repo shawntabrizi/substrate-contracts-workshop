@@ -1,11 +1,12 @@
 #![feature(proc_macro_hygiene)]
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use ink_core::storage;
-use ink_lang2 as ink;
+use ink_lang as ink;
 
 #[ink::contract(version = "0.1.0")]
 mod incrementer {
+    use ink_core::storage;
+
     #[ink(storage)]
     struct Incrementer {
         // ACTION: Create a `storage::Value` called `value` which holds a `i32`
