@@ -114,7 +114,7 @@ mod mycontract {
         // Get the value for the calling AccountId
         #[ink(message)]
         fn get_my_number(&self) -> u32 {
-            let caller = env.caller();
+            let caller = self.env().caller();
             let value = self.my_number_or_zero(&caller);
             value
         }
