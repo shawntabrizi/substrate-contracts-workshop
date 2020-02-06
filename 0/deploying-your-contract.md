@@ -34,11 +34,11 @@ After you press **Upload** and a new block is formed, a system event is emitted 
 
 Smart contracts exist as an extension of the account system on the blockchain. Thus creating an instance of this contract will create a new `AccountId` which will store any balance managed by the smart contract and allow us to interact with the contract.
 
-You will notice on the **Code** tab there is a new object that represents our smart contract. We now need to deploy our smart contract to create an **instance**. Press the "Deploy" button on the flipper contract:
+You will notice on the **Code** tab there is a new object that represents our smart contract. We now need to deploy our smart contract to create an **instance**. Press the "Deploy" button on the flipper contract.
+
+To instantiate our contract we just need to give this contract account an _endowment_ of `1,000,000` in order to pay the storage rent and again set the _maximum gas allowed_ to `500,000` units:
 
 ![An image of the Contracts Instance Page](./assets/flipper-instance-page.png)
-
-To instantiate our contract we just need to give this contract account an _endowment_ of `10,000,000` and again set the _maximum gas allowed_ to `500,000` units. 
 
 > **Note:** As mentioned earlier, contract creation involves creation of a new Account. As such, you must be sure to give the contract account at least the existential deposit defined by your blockchain. We also need to be able to pay the contract's rent (_`endowment`_). If we consume all of this deposit, the contract will become invalid. We can always refill the contract's balance and keep it on chain.
 
