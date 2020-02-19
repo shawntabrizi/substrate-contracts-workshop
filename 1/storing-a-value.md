@@ -47,7 +47,7 @@ impl MyContract {
 }
 ```
 
-You can find all the supported Substrate types in [`core/env/traits.rs`](https://github.com/paritytech/ink/blob/master/core/src/env/traits.rs).
+You can find all the supported Substrate types in [`core/env/types.rs`](https://github.com/paritytech/ink/blob/master/core/src/env/types.rs).
 
 ## Initializing Storage
 
