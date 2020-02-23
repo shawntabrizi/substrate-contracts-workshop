@@ -127,7 +127,8 @@ mod erc20 {
         fn balance_works() {
             let contract = Erc20::new(100);
             assert_eq!(contract.total_supply(), 100);
-            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 0);
+            assert_eq!(contract.balance_of(AccountId::from([0x1; 32])), 100);
+            assert_eq!(contract.balance_of(AccountId::from([0x0; 32])), 0);
         }
 
         #[test]
