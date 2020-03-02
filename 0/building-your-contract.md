@@ -4,7 +4,7 @@ Building Your Contract
 Run the following command to compile your smart contract:
 
 ```bash
-cargo contract build
+cargo +nightly contract build
 ```
 
 This special command will turn your ink! project into a Wasm binary which you can deploy to your chain. If all goes well, you should see a `target` folder which contains this `.wasm` file.
@@ -19,7 +19,7 @@ target
 By running the next command we'll generate the contract metadata (a.k.a. the contract ABI):
 
 ``` bash
-cargo contract generate-metadata
+cargo +nightly contract generate-metadata
 ```
 
 You should have a new JSON file (`metadata.json`) in the same target directory: 

@@ -36,7 +36,7 @@ cargo +nightly test
 Also check that you can build the Wasm file by running:
 
 ```bash
-cargo contract build
+cargo +nightly contract build
 ```
 
 If everything looks good, then we are ready to start programming!
