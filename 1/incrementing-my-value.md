@@ -1,7 +1,7 @@
 Incrementing My Value
 ===
 
-The final step in our Incrementer contract is to allow each use to update increment their own value.
+The final step in our Incrementer contract is to allow each user to update increment their own value.
 
 ## Modifying a HashMap
 
