@@ -24,7 +24,7 @@ If you are using another operating system, like __Windows__, follow the [install
 We need to use a Substrate node with the built-in Contracts module. For this workshop we'll use the pre-designed Substrate Node.
 
 ```bash
-cargo install node-cli --git https://github.com/paritytech/substrate.git --tag v2.0.0-alpha.3 --force
+cargo install node-cli --git https://github.com/paritytech/substrate.git --force
 ```
 
 
@@ -35,9 +35,9 @@ The final tool we will be installing is the ink! command line utility which will
 You can install the utility using Cargo with:
 
 ```bash
-cargo install --git https://github.com/paritytech/cargo-contract --tag v0.5.0 --force 
+cargo install cargo-contract --vers 0.6.0 --force
 ```
 
-You can then use `cargo contract --help` to start exploring the commands made available to you.  
+You can then use `cargo contract --help` to start exploring the commands made available to you.
 > **Note:** The ink! CLI is under heavy development and some of its commands are not implemented, yet!
 
