@@ -9,6 +9,7 @@
     - [Running a Substrate Node](0/running-a-substrate-node.md)
     - [Deploying Your Contract](0/deploying-your-contract.md)
     - [Calling Your Contract](0/calling-your-contract.md)
+    - [Troubleshooting](0/troubleshooting.md)
 
 - [**#1 Basics**](1/introduction.md)
 
