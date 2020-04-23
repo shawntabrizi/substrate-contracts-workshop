@@ -13,6 +13,14 @@ substrate --dev
 
 You should start to see blocks being produced by your node in your terminal.
 
+> **Note:** There is a known issue with the Substrate block production (BABE) on a running chain. If you stop your node for too long (closing the terminal, putting your computer to sleep, etc...), you will get the following error:
+>
+> ```bash
+> ClientImport("Unexpected epoch change")
+> ```
+>
+> To solve this you will need to reset your node with: `substrate purge-chain --dev`. At that point, you will need to re-deploy any contracts and re-do any steps that you may have done before on your node. As long as you keep your node running, you should face no issues.
+
 You can interact with your node using the Polkadot UI:
 
 https://polkadot.js.org/apps/

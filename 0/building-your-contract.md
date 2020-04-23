@@ -22,7 +22,7 @@ By running the next command we'll generate the contract metadata (a.k.a. the con
 cargo +nightly contract generate-metadata
 ```
 
-You should have a new JSON file (`metadata.json`) in the same target directory: 
+You should have a new JSON file (`metadata.json`) in the same target directory:
 
 ``` bash
 target
@@ -65,7 +65,7 @@ In the next section we will start a Substrate node and configure the Polkadot-JS
 
 **Learn More**
 
-ink! provides a built-in overflow protection enabled on our `Cargo.toml` file. It is __recommended__ to keep it enabled as a security mechanism.
+ink! provides a built-in overflow protection enabled on our `Cargo.toml` file. It is __recommended__ to keep it enabled to prevent potential overflow errors in your contract.
 ```
 [profile.release]
 panic = "abort"           <-- Panics shall be treated as aborts: reduces binary size
@@ -73,19 +73,5 @@ lto = true                <-- enable link-time-optimization: more efficient code
 opt-level = "z"           <-- Optimize for small binary output
 overflow-checks = true    <-- Arithmetic overflow protection
 ```
-After running all Rust and LLVM optimizations, we apply extra steps to create a more efficient WebAssembly [`wasm`] file.
-
-WebAssembly modules can use two parameters to specify how much memory it wants:
-
-1. Initial Size - the size of the memory when it is first imported.
-2. Maximum Size - the maximum size the memory can grow to.
-
-It is encoded like:
-
-```
-(import "env" "memory" (memory <initial> <maximum>))
-```
-
-If Maximum Size is absent then it is implicitly set to 4GB.
 
 ---
